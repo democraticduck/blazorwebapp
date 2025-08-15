@@ -1,14 +1,15 @@
 using blazorwebapp.Components;
-using Syncfusion.Blazor;
-using Syncfusion.Blazor.Core;
+using MudBlazor.Services;
+//using Syncfusion.Blazor;
+//using Syncfusion.Blazor.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-builder.Services.AddSyncfusionBlazor();
-
+//builder.Services.AddSyncfusionBlazor();
+builder.Services.AddMudServices();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
