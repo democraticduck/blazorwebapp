@@ -6,4 +6,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Syncfusion.Blazor.Core" Version="30.2.5" />
+    <PackageReference Include="Syncfusion.Blazor.Lists" Version="30.2.5" />
+    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="30.2.5" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="30.2.5" />
+  </ItemGroup>
+
 </Project>
