@@ -2,7 +2,7 @@
 
 
 @* Required *@
-<MudThemeProvider />
+<MudThemeProvider Theme="CustomTheme" />
 <MudPopoverProvider />
 
 @* Needed for dialogs *@
@@ -11,7 +11,7 @@
 @* Needed for snackbars *@
 <MudSnackbarProvider />
 
-<MudLayout>
+<MudLayout >
     <MudAppBar Elevation="1">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="DrawerToggle" />
         <MudSpacer />
@@ -19,9 +19,24 @@
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" Elevation="2">
         <MudDrawerHeader>
-            <MudText Typo="Typo.h5" Class="mt-1">Application</MudText>
+            <MudImage ObjectFit="ObjectFit.Contain" Height="200" Width="400" Src="pbb_img.png" Alt="pbb_img"  Elevation="25" Class="rounded-lg" />
         </MudDrawerHeader>
+        <MudStack>
+            <MudNavMenu Rounded="true" Margin="Margin.Dense" Color="Color.Primary" Class="pa-2">
+                <MudNavLink Href="/dashboard" Class="sidebar-nav-item" Icon="@Icons.Material.Filled.Dashboard">Dashboard</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.Prefix" Class="sidebar-nav-item" Href="/components/navmenu" Icon="@Icons.Material.Filled.Storage">Servers</MudNavLink>
+                <MudNavLink Href="/thelab" Class="sidebar-nav-item" Icon="@Icons.Material.Filled.Science">The Lab</MudNavLink>
+            </MudNavMenu>
+        </MudStack>
         
+        <MudStack Spacing=0 Class="py-6">
+            <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Secondary Text</MudText>
+            <MudNavMenu Rounded="true" Margin="Margin.Dense" Color="Color.Primary" Class="pa-2">
+                <MudNavLink Href="/dashboard" Icon="@Icons.Material.Filled.Dashboard">Dashboard</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.Prefix" Href="/components/navmenu" Icon="@Icons.Material.Filled.Storage">Servers</MudNavLink>
+                <MudNavLink Href="/thelab" Icon="@Icons.Material.Filled.Science">The Lab</MudNavLink>
+            </MudNavMenu>
+        </MudStack>
     </MudDrawer>
     <MudMainContent>
         @Body
