@@ -10,7 +10,8 @@ namespace blazorwebapp.Components.Layout
             {
                 Primary = Colors.Shades.White,
                 Secondary = Colors.Red.Lighten1,
-                AppbarBackground = Colors.Green.Accent1
+                AppbarBackground = Colors.Shades.White,
+                Background = Colors.Gray.Lighten4
             }
         };
         void DrawerToggle()

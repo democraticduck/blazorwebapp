@@ -13,16 +13,28 @@
 
 <MudLayout >
     <MudAppBar Elevation="1">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="DrawerToggle" />
+        <MudHidden Breakpoint="Breakpoint.Sm" Invert="true">
+            <MudIconButton Icon="@Icons.Material.Filled.Menu" Edge="Edge.Start" OnClick="DrawerToggle" />
+            <MudSpacer />
+            <MudText Color="Color.Dark">Overview</MudText>
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.Sm">
+            <MudText Color="Color.Dark">Overview</MudText>
+        </MudHidden>
         <MudSpacer />
-        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
+        <MudStack Row="true">
+            <MudIconButton Icon="@Icons.Material.Filled.Notifications" Title="Favorite" />
+            <MudIconButton Icon="@Icons.Material.Filled.Settings" Title="Favorite" />
+            <MudIconButton Icon="@Icons.Material.Filled.Person"  />
+        </MudStack>
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" Elevation="2">
-        <MudDrawerHeader>
-            <MudImage ObjectFit="ObjectFit.Contain" Height="200" Width="400" Src="pbb_img.png" Alt="pbb_img"  Elevation="25" Class="rounded-lg" />
-        </MudDrawerHeader>
-        <MudStack>
-            <MudNavMenu Rounded="true" Margin="Margin.Dense" Color="Color.Primary" Class="pa-2">
+        <MudStack Class="m-3">
+            <MudImage ObjectFit="ObjectFit.Contain" Fluid="true" Height="200" Width="400" Src="pbb_img.png" Alt="pbb_img" Elevation="25" Class="shadow-none" />
+        </MudStack>
+        <MudDivider DividerType="DividerType.Inset" Class="mx-2 my-3" />
+        <MudStack> @*Add Match to each navlink*@
+            <MudNavMenu Rounded="true" Margin="Margin.Dense" Color="Color.Secondary" Class="pa-2">
                 <MudNavLink Href="/dashboard" Class="sidebar-nav-item" Icon="@Icons.Material.Filled.Dashboard">Dashboard</MudNavLink>
                 <MudNavLink Match="NavLinkMatch.Prefix" Class="sidebar-nav-item" Href="/components/navmenu" Icon="@Icons.Material.Filled.Storage">Servers</MudNavLink>
                 <MudNavLink Href="/thelab" Class="sidebar-nav-item" Icon="@Icons.Material.Filled.Science">The Lab</MudNavLink>
@@ -42,5 +54,11 @@
         @Body
     </MudMainContent>
 </MudLayout>
+<style>
+    .mud-nav-link:hover, .mud-icon-button:hover {
+        color: var(--mud-palette-secondary);
+    }
 
+   
+</style>
 
