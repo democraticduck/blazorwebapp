@@ -1,0 +1,715 @@
+﻿@page "/vacancy-data2"
+@using MudBlazor
+
+<PageTitle>Vacancy Data Groups</PageTitle>
+
+<style>
+    /* Custom CSS for collapsible group content */
+    .group-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-in-out;
+    }
+
+        .group-content.open {
+            max-height: 1000px; /* A large value to allow smooth transition for any content size */
+        }
+
+    .rotate-icon {
+        transform: rotate(0deg);
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .rotate-icon.rotated {
+            transform: rotate(180deg);
+        }
+
+    .vacancy-container {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #FFFFFF, #FFFFFF);
+        padding: 2rem;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .vacancy-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 1.5rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        width: 100%;
+        max-width: 72rem;
+    }
+
+    .header-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+    }
+
+    .header-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #424242;
+        margin: 0;
+    }
+
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .search-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        border-radius: 0.5rem;
+        border: 1px solid #E0E0E0;
+        background: #F5F5F5;
+        padding: 0.5rem 1rem;
+        width: 18rem;
+    }
+
+    .search-icon {
+        width: 1.25rem;
+        height: 1.25rem;
+        color: #9E9E9E;
+        margin-right: 0.5rem;
+    }
+
+    .filter-btn, .add-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #E0E0E0;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .filter-btn {
+        background: #F5F5F5;
+        color: #616161;
+    }
+
+        .filter-btn:hover {
+            background: #EEEEEE;
+        }
+
+    .add-btn {
+        background: #2196F3;
+        color: white;
+        border-color: #2196F3;
+    }
+
+        .add-btn:hover {
+            background: #1976D2;
+        }
+
+    .group-card {
+        border-radius: 1rem;
+        border: 1px solid #E0E0E0;
+        overflow: hidden;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        margin-bottom: 1rem;
+    }
+
+    .group-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+        .group-header:hover {
+            background-color: #EEEEEE;
+        }
+
+    .group-header-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #424242;
+    }
+
+    .status-open {
+        background: rgba(33, 150, 243, 0.1);
+        color: #2962FF;
+        font-size: 0.75rem;
+        font-weight: 500;
+        padding: 0.25rem 0.625rem;
+        border-radius: 9999px;
+    }
+
+    .status-closed {
+        background: #EEEEEE;
+        color: #616161;
+        font-size: 0.75rem;
+        font-weight: 500;
+        padding: 0.25rem 0.625rem;
+        border-radius: 9999px;
+    }
+
+    .pagination-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 1.5rem;
+    }
+
+    .items-per-page {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid #E0E0E0;
+        background: #F5F5F5;
+        padding: 0.5rem 1rem;
+        color: #616161;
+        cursor: pointer;
+    }
+
+    .pagination-numbers {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #616161;
+    }
+
+    .page-number {
+        border-radius: 0.5rem;
+        border: 1px solid #E0E0E0;
+        background: white;
+        padding: 0.5rem 1rem;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+        .page-number.active {
+            background: #2196F3;
+            color: white;
+            border-color: #2196F3;
+        }
+
+    .nav-buttons {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .nav-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid #E0E0E0;
+        background: white;
+        padding: 0.5rem 1rem;
+        color: #616161;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+        .nav-btn:hover {
+            background: #F5F5F5;
+        }
+
+    /* Custom MudBlazor overrides */
+    .mud-table {
+        border-radius: 1rem;
+        overflow: hidden;
+    }
+
+    .mud-table-head {
+        background-color: #FF7575 !important;
+    }
+
+        .mud-table-head .mud-table-cell {
+            color: black !important;
+            font-weight: 500 !important;
+            padding: 0.75rem 1.5rem !important;
+            height: 3rem !important;
+            text-align: center;
+        }
+
+    .mud-table-body .mud-table-row {
+        height: 3rem !important;
+    }
+
+    .mud-table-body .mud-table-cell {
+        padding: 0.75rem 1.5rem !important;
+        color: #616161 !important;
+        font-size: 0.875rem !important;
+        text-align: center;
+    }
+
+    .mud-input-control {
+        background: transparent !important;
+    }
+
+        .mud-input-control .mud-input {
+            background: transparent !important;
+            color: #616161 !important;
+        }
+
+            .mud-input-control .mud-input::placeholder {
+                color: #9E9E9E !important;
+            }
+</style>
+
+<div class="vacancy-container">
+    <div class="vacancy-card">
+        <!-- Header -->
+        <div class="header-section">
+            <h1 class="header-title">Vacancy Data</h1>
+            <div class="header-actions">
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <MudIcon Icon="@Icons.Material.Filled.Search" Class="search-icon" />
+                    <MudTextField @bind-Value="searchText"
+                                  Placeholder="Search"
+                                  Variant="Variant.Text"
+                                  DisableUnderLine="true"
+                                  Style="background: transparent; width: 100%;" />
+                </div>
+
+                <!-- Filter Button -->
+                <MudButton Class="filter-btn" StartIcon="@Icons.Material.Filled.FilterList">
+                    Filter
+                </MudButton>
+
+                <!-- Add New Button -->
+                <MudButton Class="add-btn" StartIcon="@Icons.Material.Filled.Add">
+                    Add New
+                </MudButton>
+            </div>
+        </div>
+
+        <!-- Grouped Tables Container -->
+        <div>
+            <!-- Development Group -->
+            <div class="group-card">
+                <!-- Group Header (clickable) -->
+                <div class="group-header" @onclick="() => ToggleGroup(0)">
+                    <h2 class="group-header-title">Development Vacancies</h2>
+                    <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowDown"
+                             Class="@($"rotate-icon {(groupStates[0] ? "rotated" : "")}")"
+                             Style="color: #9E9E9E;" />
+                </div>
+                <!-- Group Content (collapsible) -->
+                <div class="@($"group-content {(groupStates[0] ? "open" : "")}")">
+                    <MudTable Items="developmentVacancies" Hover="false" Striped="false" Dense="false" Class="mud-table">
+                        <HeaderContent>
+                            <MudTh>No</MudTh>
+                            <MudTh>Role</MudTh>
+                            <MudTh>Location</MudTh>
+                            <MudTh>Employment Type</MudTh>
+                            <MudTh>Job Category</MudTh>
+                            <MudTh>Salary Range</MudTh>
+                            <MudTh>Posted Date</MudTh>
+                            <MudTh>Closing Date</MudTh>
+                            <MudTh>Status</MudTh>
+                            <MudTh Style="text-align: right;">Action</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="No">@context.No</MudTd>
+                            <MudTd DataLabel="Role">@context.Role</MudTd>
+                            <MudTd DataLabel="Location">@context.Location</MudTd>
+                            <MudTd DataLabel="Employment Type">@context.EmploymentType</MudTd>
+                            <MudTd DataLabel="Job Category">@context.JobCategory</MudTd>
+                            <MudTd DataLabel="Salary Range">@context.SalaryRange</MudTd>
+                            <MudTd DataLabel="Posted Date">@context.PostedDate</MudTd>
+                            <MudTd DataLabel="Closing Date">@context.ClosingDate</MudTd>
+                            <MudTd DataLabel="Status">
+                                <span class="@(context.Status == "Open" ? "status-open" : "status-closed")">
+                                    @context.Status
+                                </span>
+                            </MudTd>
+                            <MudTd DataLabel="Action" Style="text-align: right;">
+                                <MudMenu Icon="@Icons.Material.Filled.MoreHoriz"
+                                         AnchorOrigin="Origin.BottomRight"
+                                         TransformOrigin="Origin.TopRight"
+                                         Style="color: #9E9E9E;">
+                                    <MudMenuItem Icon="@Icons.Material.Filled.Edit"
+                                                 IconColor="Color.Success"
+                                                 Style="font-size: 0.875rem; color: #616161;">
+                                        Edit
+                                    </MudMenuItem>
+                                    <MudMenuItem Icon="@Icons.Material.Filled.Delete"
+                                                 IconColor="Color.Error"
+                                                 Style="font-size: 0.875rem; color: #616161;">
+                                        Delete
+                                    </MudMenuItem>
+                                </MudMenu>
+                            </MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                    <!-- Pagination -->
+                    <div class="pagination-container">
+                        <!-- Rows per page selector -->
+                        <MudMenu>
+                            <ActivatorContent>
+                                <div class="items-per-page">
+                                    <span>10 Item</span>
+                                    <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowDown" Size="Size.Small" />
+                                </div>
+                            </ActivatorContent>
+                            <ChildContent>
+                                <MudMenuItem OnClick="() => SetItemsPerPage(5)">5 Item</MudMenuItem>
+                                <MudMenuItem OnClick="() => SetItemsPerPage(10)">10 Item</MudMenuItem>
+                                <MudMenuItem OnClick="() => SetItemsPerPage(20)">20 Item</MudMenuItem>
+                            </ChildContent>
+                        </MudMenu>
+
+                        <!-- Pagination numbers -->
+                        <div class="pagination-numbers">
+                            <span class="page-number">1</span>
+                            <span class="page-number active">2</span>
+                            <span class="page-number">3</span>
+                            <span class="page-number">4</span>
+                            <span class="page-number">5</span>
+                            <span style="font-weight: 700;">...</span>
+                            <span class="page-number">15</span>
+                        </div>
+
+                        <!-- Navigation Buttons -->
+                        <div class="nav-buttons">
+                            <div class="nav-btn">
+                                <MudIcon Icon="@Icons.Material.Filled.ChevronLeft" Size="Size.Small" />
+                                <span>Previous</span>
+                            </div>
+                            <div class="nav-btn">
+                                <span>Next</span>
+                                <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Marketing Group -->
+            <div class="group-card">
+                <!-- Group Header (clickable) -->
+                <div class="group-header" @onclick="() => ToggleGroup(1)">
+                    <h2 class="group-header-title">Marketing Vacancies</h2>
+                    <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowDown"
+                             Class="@($"rotate-icon {(groupStates[1] ? "rotated" : "")}")"
+                             Style="color: #9E9E9E;" />
+                </div>
+                <!-- Group Content (collapsible) -->
+                <div class="@($"group-content {(groupStates[1] ? "open" : "")}")">
+                    <MudTable Items="marketingVacancies" Hover="false" Striped="false" Dense="false" Class="mud-table">
+                        <HeaderContent>
+                            <MudTh>No</MudTh>
+                            <MudTh>Role</MudTh>
+                            <MudTh>Location</MudTh>
+                            <MudTh>Employment Type</MudTh>
+                            <MudTh>Job Category</MudTh>
+                            <MudTh>Salary Range</MudTh>
+                            <MudTh>Posted Date</MudTh>
+                            <MudTh>Closing Date</MudTh>
+                            <MudTh>Status</MudTh>
+                            <MudTh Style="text-align: right;">Action</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="No">@context.No</MudTd>
+                            <MudTd DataLabel="Role">@context.Role</MudTd>
+                            <MudTd DataLabel="Location">@context.Location</MudTd>
+                            <MudTd DataLabel="Employment Type">@context.EmploymentType</MudTd>
+                            <MudTd DataLabel="Job Category">@context.JobCategory</MudTd>
+                            <MudTd DataLabel="Salary Range">@context.SalaryRange</MudTd>
+                            <MudTd DataLabel="Posted Date">@context.PostedDate</MudTd>
+                            <MudTd DataLabel="Closing Date">@context.ClosingDate</MudTd>
+                            <MudTd DataLabel="Status">
+                                <span class="@(context.Status == "Open" ? "status-open" : "status-closed")">
+                                    @context.Status
+                                </span>
+                            </MudTd>
+                            <MudTd DataLabel="Action" Style="text-align: right;">
+                                <MudMenu Icon="@Icons.Material.Filled.MoreHoriz"
+                                         AnchorOrigin="Origin.BottomRight"
+                                         TransformOrigin="Origin.TopRight"
+                                         Style="color: #9E9E9E;">
+                                    <MudMenuItem Icon="@Icons.Material.Filled.Edit"
+                                                 IconColor="Color.Success"
+                                                 Style="font-size: 0.875rem; color: #616161;">
+                                        Edit
+                                    </MudMenuItem>
+                                    <MudMenuItem Icon="@Icons.Material.Filled.Delete"
+                                                 IconColor="Color.Error"
+                                                 Style="font-size: 0.875rem; color: #616161;">
+                                        Delete
+                                    </MudMenuItem>
+                                </MudMenu>
+                            </MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                    <!-- Pagination -->
+                    <div class="pagination-container">
+                        <!-- Rows per page selector -->
+                        <MudMenu>
+                            <ActivatorContent>
+                                <div class="items-per-page">
+                                    <span>10 Item</span>
+                                    <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowDown" Size="Size.Small" />
+                                </div>
+                            </ActivatorContent>
+                            <ChildContent>
+                                <MudMenuItem OnClick="() => SetItemsPerPage(5)">5 Item</MudMenuItem>
+                                <MudMenuItem OnClick="() => SetItemsPerPage(10)">10 Item</MudMenuItem>
+                                <MudMenuItem OnClick="() => SetItemsPerPage(20)">20 Item</MudMenuItem>
+                            </ChildContent>
+                        </MudMenu>
+
+                        <!-- Pagination numbers -->
+                        <div class="pagination-numbers">
+                            <span class="page-number">1</span>
+                            <span class="page-number active">2</span>
+                            <span class="page-number">3</span>
+                            <span class="page-number">4</span>
+                            <span class="page-number">5</span>
+                            <span style="font-weight: 700;">...</span>
+                            <span class="page-number">15</span>
+                        </div>
+
+                        <!-- Navigation Buttons -->
+                        <div class="nav-buttons">
+                            <div class="nav-btn">
+                                <MudIcon Icon="@Icons.Material.Filled.ChevronLeft" Size="Size.Small" />
+                                <span>Previous</span>
+                            </div>
+                            <div class="nav-btn">
+                                <span>Next</span>
+                                <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Human Resources Group -->
+            <div class="group-card">
+                <!-- Group Header (clickable) -->
+                <div class="group-header" @onclick="() => ToggleGroup(2)">
+                    <h2 class="group-header-title">Human Resources Vacancies</h2>
+                    <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowDown"
+                             Class="@($"rotate-icon {(groupStates[2] ? "rotated" : "")}")"
+                             Style="color: #9E9E9E;" />
+                </div>
+                <!-- Group Content (collapsible) -->
+                <div class="@($"group-content {(groupStates[2] ? "open" : "")}")">
+                    <MudTable Items="hrVacancies" Hover="false" Striped="false" Dense="false" Class="mud-table">
+                        <HeaderContent>
+                            <MudTh>No</MudTh>
+                            <MudTh>Role</MudTh>
+                            <MudTh>Location</MudTh>
+                            <MudTh>Employment Type</MudTh>
+                            <MudTh>Job Category</MudTh>
+                            <MudTh>Salary Range</MudTh>
+                            <MudTh>Posted Date</MudTh>
+                            <MudTh>Closing Date</MudTh>
+                            <MudTh>Status</MudTh>
+                            <MudTh Style="text-align: right;">Action</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="No">@context.No</MudTd>
+                            <MudTd DataLabel="Role">@context.Role</MudTd>
+                            <MudTd DataLabel="Location">@context.Location</MudTd>
+                            <MudTd DataLabel="Employment Type">@context.EmploymentType</MudTd>
+                            <MudTd DataLabel="Job Category">@context.JobCategory</MudTd>
+                            <MudTd DataLabel="Salary Range">@context.SalaryRange</MudTd>
+                            <MudTd DataLabel="Posted Date">@context.PostedDate</MudTd>
+                            <MudTd DataLabel="Closing Date">@context.ClosingDate</MudTd>
+                            <MudTd DataLabel="Status">
+                                <span class="@(context.Status == "Open" ? "status-open" : "status-closed")">
+                                    @context.Status
+                                </span>
+                            </MudTd>
+                            <MudTd DataLabel="Action" Style="text-align: right;">
+                                <MudMenu Icon="@Icons.Material.Filled.MoreHoriz"
+                                         AnchorOrigin="Origin.BottomRight"
+                                         TransformOrigin="Origin.TopRight"
+                                         Style="color: #9E9E9E;">
+                                    <MudMenuItem Icon="@Icons.Material.Filled.Edit"
+                                                 IconColor="Color.Success"
+                                                 Style="font-size: 0.875rem; color: #616161;">
+                                        Edit
+                                    </MudMenuItem>
+                                    <MudMenuItem Icon="@Icons.Material.Filled.Delete"
+                                                 IconColor="Color.Error"
+                                                 Style="font-size: 0.875rem; color: #616161;">
+                                        Delete
+                                    </MudMenuItem>
+                                </MudMenu>
+                            </MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                    <!-- Pagination -->
+                    <div class="pagination-container">
+                        <!-- Rows per page selector -->
+                        <MudMenu>
+                            <ActivatorContent>
+                                <div class="items-per-page">
+                                    <span>10 Item</span>
+                                    <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowDown" Size="Size.Small" />
+                                </div>
+                            </ActivatorContent>
+                            <ChildContent>
+                                <MudMenuItem OnClick="() => SetItemsPerPage(5)">5 Item</MudMenuItem>
+                                <MudMenuItem OnClick="() => SetItemsPerPage(10)">10 Item</MudMenuItem>
+                                <MudMenuItem OnClick="() => SetItemsPerPage(20)">20 Item</MudMenuItem>
+                            </ChildContent>
+                        </MudMenu>
+
+                        <!-- Pagination numbers -->
+                        <div class="pagination-numbers">
+                            <span class="page-number">1</span>
+                            <span class="page-number active">2</span>
+                            <span class="page-number">3</span>
+                            <span class="page-number">4</span>
+                            <span class="page-number">5</span>
+                            <span style="font-weight: 700;">...</span>
+                            <span class="page-number">15</span>
+                        </div>
+
+                        <!-- Navigation Buttons -->
+                        <div class="nav-buttons">
+                            <div class="nav-btn">
+                                <MudIcon Icon="@Icons.Material.Filled.ChevronLeft" Size="Size.Small" />
+                                <span>Previous</span>
+                            </div>
+                            <div class="nav-btn">
+                                <span>Next</span>
+                                <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* <!-- Pagination -->
+        <div class="pagination-container">
+            <!-- Rows per page selector -->
+            <MudMenu>
+                <ActivatorContent>
+                    <div class="items-per-page">
+                        <span>10 Item</span>
+                        <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowDown" Size="Size.Small" />
+                    </div>
+                </ActivatorContent>
+                <ChildContent>
+                    <MudMenuItem OnClick="() => SetItemsPerPage(5)">5 Item</MudMenuItem>
+                    <MudMenuItem OnClick="() => SetItemsPerPage(10)">10 Item</MudMenuItem>
+                    <MudMenuItem OnClick="() => SetItemsPerPage(20)">20 Item</MudMenuItem>
+                </ChildContent>
+            </MudMenu>
+
+            <!-- Pagination numbers -->
+            <div class="pagination-numbers">
+                <span class="page-number">1</span>
+                <span class="page-number active">2</span>
+                <span class="page-number">3</span>
+                <span class="page-number">4</span>
+                <span class="page-number">5</span>
+                <span style="font-weight: 700;">...</span>
+                <span class="page-number">15</span>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="nav-buttons">
+                <div class="nav-btn">
+                    <MudIcon Icon="@Icons.Material.Filled.ChevronLeft" Size="Size.Small" />
+                    <span>Previous</span>
+                </div>
+                <div class="nav-btn">
+                    <span>Next</span>
+                    <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
+                </div>
+            </div>
+        </div> *@
+    </div>
+</div>
+
+@code {
+    private string searchText = "";
+    private int itemsPerPage = 10;
+    private int currentPage = 2; // Set to 2 to match the original design
+    private bool[] groupStates = { false, false, false }; // All groups start collapsed
+
+    private void ToggleGroup(int index)
+    {
+        groupStates[index] = !groupStates[index];
+        StateHasChanged();
+    }
+
+    private void SetPage(int page)
+    {
+        currentPage = page;
+        StateHasChanged();
+    }
+
+    private void PreviousPage()
+    {
+        if (currentPage > 1)
+        {
+            currentPage--;
+            StateHasChanged();
+        }
+    }
+
+    private void NextPage()
+    {
+        if (currentPage < 15)
+        {
+            currentPage++;
+            StateHasChanged();
+        }
+    }
+
+    private void SetItemsPerPage(int items)
+    {
+        itemsPerPage = items;
+        StateHasChanged();
+    }
+
+    // Sample data models and collections
+    public class VacancyItem
+    {
+        public int No { get; set; }
+        public string Role { get; set; } = "";
+        public string Location { get; set; } = "";
+        public string EmploymentType { get; set; } = "";
+        public string JobCategory { get; set; } = "";
+        public string SalaryRange { get; set; } = "";
+        public string PostedDate { get; set; } = "";
+        public string ClosingDate { get; set; } = "";
+        public string Status { get; set; } = "";
+    }
+
+    private List<VacancyItem> developmentVacancies = new()
+    {
+        new VacancyItem { No = 1, Role = "UI Designer", Location = "WFO", EmploymentType = "Full-time", JobCategory = "Development", SalaryRange = "5-7M IDR", PostedDate = "01/05/2025", ClosingDate = "15/06/2025", Status = "Open" },
+        new VacancyItem { No = 2, Role = "Frontend Engineer", Location = "WFO", EmploymentType = "Full-time", JobCategory = "Development", SalaryRange = "5-7M IDR", PostedDate = "01/05/2025", ClosingDate = "15/06/2025", Status = "Open" },
+        new VacancyItem { No = 3, Role = "Backend Engineer", Location = "WFO", EmploymentType = "Full-time", JobCategory = "Development", SalaryRange = "5-7M IDR", PostedDate = "01/05/2025", ClosingDate = "15/06/2025", Status = "Open" }
+    };
+
+    private List<VacancyItem> marketingVacancies = new()
+    {
+        new VacancyItem { No = 1, Role = "Graphic Designer", Location = "WFO", EmploymentType = "Full-time", JobCategory = "Marketing", SalaryRange = "4-6M IDR", PostedDate = "01/05/2025", ClosingDate = "15/06/2025", Status = "Open" },
+        new VacancyItem { No = 2, Role = "Illustrator", Location = "WFO", EmploymentType = "Full-time", JobCategory = "Marketing", SalaryRange = "4-6M IDR", PostedDate = "01/05/2025", ClosingDate = "15/06/2025", Status = "Open" }
+    };
+
+    private List<VacancyItem> hrVacancies = new()
+    {
+        new VacancyItem { No = 1, Role = "HR Coordinator", Location = "WFO", EmploymentType = "Full-time", JobCategory = "Human Resources", SalaryRange = "4-6M IDR", PostedDate = "01/05/2025", ClosingDate = "15/06/2025", Status = "Open" }
+    };
+}
