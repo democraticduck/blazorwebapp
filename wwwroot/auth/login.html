@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>eLDS – Login (Static)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">           <!-- if CSS is next to the HTML -->
+    <div class="bg" style="background-image:url('images/bg.jpg')"></div> <!-- if used -->
+
+</head>
+<body>
+  <!-- Top-left logo/wordmark -->
+  <header class="brand">
+    <!-- Replace logo.svg with your actual logo file (SVG/PNG) -->
+    <img src="logo.png" alt="eLDS Logo" class="brand__icon" />
+    <span class="brand__word">eLDS</span>
+  </header>
+
+  <!-- Full-screen background (replace assets/bg.jpg) -->
+  <div class="bg"></div>
+  <main class="wrap">
+    <section class="card">
+      <h1 class="title">Login</h1>
+
+      <form class="form" action="#" method="post">
+          <label class="label" for="email">Email</label>
+          <input id="email" type="email" placeholder="username@gmail.com" class="input" />
+
+          <label class="label mt" for="password">Password</label>
+          <div class="input input--with-icon">
+              <input id="password" type="password" placeholder="Password" class="input__field">
+              <!-- purely decorative icon; no JS needed -->
+              <svg class="input__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6Zm9 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="1.6" />
+              </svg>
+          </div>
+
+          <a class="link" href="#">Forgot Password?</a>
+
+          <button type="button" class="btn" onclick="window.location.href='/'">
+              Sign in
+          </button>          
+          <!-- NOTE: type='button' on purpose so it never submits -->
+      </form>
+    </section>
+  </main>
+
+
+</body>
+</html>
