@@ -1,0 +1,25 @@
+﻿@using MudBlazor
+@using blazorwebapp.Components.Shared.Navigation
+
+
+@*Add title and search bar here*@
+
+
+<MudDialog Style="width: 4000px; padding-block: 25px;">
+    <DialogContent>
+        <MudTable T="NavListItem" Items="@Elements" Hover="true" @ref="mudTable"
+                  RowClass="cursor-pointer" RowClassFunc="@SelectedRowClassFunc" OnRowClick="RowClickEvent" Breakpoint="Breakpoint.None">
+            <ToolBarContent>
+                <CustomNavSearchBox Elements="@Elements" Variant="Variant.Text" Style="width: 300px;" />
+            </ToolBarContent>
+
+            <HeaderContent>
+                <MudTh>Name</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Name" Style="color: inherit;">@context.Name</MudTd>
+            </RowTemplate>
+        </MudTable>
+    </DialogContent>
+</MudDialog>
+

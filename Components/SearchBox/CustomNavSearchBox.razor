@@ -1,0 +1,38 @@
+﻿    <MudStack Class="w-full m-0 shadow-none" Style="@Style">
+        <MudTextField @bind-Value="_currentString"
+                        Label="Search"
+                        Immediate="true"
+                        Variant="@Variant"
+                        Margin="Margin.Dense"
+                        OnBlur="() => setOpen(false)"
+                      
+                        @onfocus="() => setOpen(true)" Class="m-0"  />
+        <MudPopover Open="@_open" RelativeWidth="DropdownWidth.Relative" Fixed="true" Class="px-4 m-0 shadow-none" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopLeft">
+            <div class="overflow-auto" style="max-height:300px; width:100%;">
+
+            @if (!string.IsNullOrWhiteSpace(_currentString))
+            {
+                var filtered = Elements
+                .Where(s => s.Name.Contains(_currentString, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+                @if (filtered.Any())
+                {
+                    @foreach (var item in filtered)
+                    {
+                        Console.WriteLine(@item);
+                        <MudNavLink Href="@item.Path">
+                            @item
+                        </MudNavLink>
+                    }
+                }
+                else
+                {
+                    <MudText Typo="Typo.caption" Class="text-gray-500">No matches</MudText>
+                }
+            }
+              
+            </div>
+            
+        </MudPopover>
+    </MudStack>
+    
