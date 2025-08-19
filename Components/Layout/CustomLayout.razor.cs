@@ -8,10 +8,12 @@ namespace blazorwebapp.Components.Layout
         {
             PaletteLight = new PaletteLight()
             {
-                Primary = Colors.Shades.White,
+                Primary = Colors.Shades.Black,
                 Secondary = Colors.Red.Lighten1,
                 AppbarBackground = Colors.Shades.White,
-                Background = Colors.Gray.Lighten4
+                Background = Colors.Gray.Lighten4,
+                
+                
             }
         };
         void DrawerToggle()

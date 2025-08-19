@@ -1,24 +1,23 @@
 ﻿@inherits LayoutComponentBase
 
 
-@* Required *@
 <MudThemeProvider Theme="CustomTheme" />
 <MudPopoverProvider />
 
-@* Needed for dialogs *@
+
 <MudDialogProvider />
 
-@* Needed for snackbars *@
+
 <MudSnackbarProvider />
 
 <MudLayout >
     <MudAppBar Elevation="1">
-        <MudHidden Breakpoint="Breakpoint.Sm" Invert="true">
+        <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
             <MudIconButton Icon="@Icons.Material.Filled.Menu" Edge="Edge.Start" OnClick="DrawerToggle" />
             <MudSpacer />
             <MudText Color="Color.Dark">Overview</MudText>
         </MudHidden>
-        <MudHidden Breakpoint="Breakpoint.Sm">
+        <MudHidden Breakpoint="Breakpoint.SmAndDown">
             <MudText Color="Color.Dark">Overview</MudText>
         </MudHidden>
         <MudSpacer />
@@ -35,20 +34,13 @@
         <MudDivider DividerType="DividerType.Inset" Class="mx-2 my-3" />
         <MudStack> @*Add Match to each navlink*@
             <MudNavMenu Rounded="true" Margin="Margin.Dense" Color="Color.Secondary" Class="pa-2">
-                <MudNavLink Href="/dashboard" Class="sidebar-nav-item" Icon="@Icons.Material.Filled.Dashboard">Dashboard</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.Prefix" Href="/" Class="sidebar-nav-item" Icon="@Icons.Material.Filled.Dashboard">Home</MudNavLink>
                 <MudNavLink Match="NavLinkMatch.Prefix" Class="sidebar-nav-item" Href="/components/navmenu" Icon="@Icons.Material.Filled.Storage">Servers</MudNavLink>
-                <MudNavLink Href="/thelab" Class="sidebar-nav-item" Icon="@Icons.Material.Filled.Science">The Lab</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.Prefix" Href="/thelab" Class="sidebar-nav-item" Icon="@Icons.Material.Filled.Science">The Lab</MudNavLink>
             </MudNavMenu>
         </MudStack>
         
-        <MudStack Spacing=0 Class="py-6">
-            <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">Secondary Text</MudText>
-            <MudNavMenu Rounded="true" Margin="Margin.Dense" Color="Color.Primary" Class="pa-2">
-                <MudNavLink Href="/dashboard" Icon="@Icons.Material.Filled.Dashboard">Dashboard</MudNavLink>
-                <MudNavLink Match="NavLinkMatch.Prefix" Href="/components/navmenu" Icon="@Icons.Material.Filled.Storage">Servers</MudNavLink>
-                <MudNavLink Href="/thelab" Icon="@Icons.Material.Filled.Science">The Lab</MudNavLink>
-            </MudNavMenu>
-        </MudStack>
+        
     </MudDrawer>
     <MudMainContent>
         @Body

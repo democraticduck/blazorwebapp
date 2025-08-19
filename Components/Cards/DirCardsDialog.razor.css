@@ -1,0 +1,13 @@
+﻿.selected {
+    color: var(--mud-palette-secondary);
+    background-color: var(--mud-palette-table-hover);
+}
+
+.mud-table-toolbar {
+    padding: 10px;
+    padding-inline: 16px;
+}
+
+.mud-dialog-title {
+    padding: 20px !important
+}
