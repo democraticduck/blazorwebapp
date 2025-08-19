@@ -1,0 +1,621 @@
+﻿@page "/testing"
+@using MudBlazor
+
+<MudContainer Class="py-4 px-2">
+    <MudPaper Elevation="8" Class="pa-4 mb-4" Style="background: linear-gradient(135deg, #fc4e03 0%, #FF7575 100%); border-radius: 12px;">
+        <MudText Typo="Typo.h5" Align="Align.Center" Style="color: white; font-weight: bold; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">
+            <MudIcon Icon="Icons.Material.Filled.PersonAdd" Class="mr-2" Size="Size.Medium" />
+            Professional Registration Form
+        </MudText>
+        <MudText Typo="Typo.subtitle2" Align="Align.Center" Style="color: rgba(255,255,255,0.9);">
+            Complete your profile with style and precision
+        </MudText>
+    </MudPaper>
+
+    <MudPaper Elevation="6" Class="pa-4" Style="border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);">
+        <MudForm @ref="form" @bind-IsValid="@isFormValid">
+            <MudGrid Spacing="2">
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6" Style="color: #667eea; font-weight: 600;">
+                        <MudIcon Icon="Icons.Material.Filled.Person" Class="mr-1" />
+                        Personal Information
+                    </MudText>
+                    <div class="custom-divider mb-3"></div>
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="firstName"
+                                  Label="First Name"
+                                  Variant="Variant.Outlined"
+                                  Required="true"
+                                  RequiredError="First name is required"
+                                  Placeholder=""
+                                  Immediate="true"
+                                  Class="custom-field always-float" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="lastName"
+                                  Label="Last Name"
+                                  Variant="Variant.Outlined"
+                                  Required="true"
+                                  RequiredError="Last name is required"
+                                  Placeholder=""
+                                  Immediate="true"
+                                  Class="custom-field always-float" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="email"
+                                  Label="Email Address"
+                                  Variant="Variant.Outlined"
+                                  Required="true"
+                                  RequiredError="Email address is required"
+                                  Placeholder=""
+                                  Immediate="true"
+                                  Class="custom-field always-float" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="phoneNumber"
+                                  Label="Phone Number"
+                                  Variant="Variant.Outlined"
+                                  InputType="InputType.Telephone"
+                                  Placeholder=""
+                                  Immediate="true"
+                                  Class="custom-field always-float" />
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudSelect @bind-Value="country"
+                               Label="Country"
+                               Variant="Variant.Outlined"
+                               Required="true"
+                               RequiredError="Please select a country"
+                               Placeholder="Select your country"
+                               CloseIcon="@Icons.Material.Filled.LocationCity"
+                               Class="custom-field always-float">
+                        @foreach (var country in countries)
+                        {
+                            <MudSelectItem Value="@country">@country</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs="12" sm="6" Class="pl-4">
+                    <div class="d-flex align-center gender-section">
+                        <MudText Typo="Typo.body2" Class="mr-2">Gender:</MudText>
+                        <MudRadioGroup T="string" @bind-Value="gender" Class="d-flex flex-row gap-3 small-radio">
+                            <MudRadio T="string" Value="@("Male")" Color="Color.Primary">Male</MudRadio>
+                            <MudRadio T="string" Value="@("Female")" Color="Color.Primary">Female</MudRadio>
+                            <MudRadio T="string" Value="@("Others")" Color="Color.Primary">Other</MudRadio>
+                        </MudRadioGroup>
+                    </div>
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudDatePicker @bind-Date="DOB"
+                                   Label="Date of Birth"
+                                   Variant="Variant.Outlined"
+                                   Placeholder="Select your date of birth"
+                                   Editable="true"
+                                   DateFormat="dd/MM/yyyy"
+                                   Class="custom-field always-float" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6" Class="mt-4" Style="color: #667eea; font-weight: 600;">
+                        <MudIcon Icon="Icons.Material.Filled.Work" Class="mr-1" />
+                        Professional Information
+                    </MudText>
+                    <div class="custom-divider mb-3"></div>
+                </MudItem>
+
+                <MudItem xs="12" sm="4">
+                    <MudTextField @bind-Value="jobTitle"
+                                  Label="Job Title"
+                                  Variant="Variant.Outlined"
+                                  Placeholder=""
+                                  Immediate="true"
+                                  Class="custom-field always-float" />
+                </MudItem>
+
+                <MudItem xs="12" sm="4">
+                    <MudTextField @bind-Value="company"
+                                  Label="Company Name"
+                                  Variant="Variant.Outlined"
+                                  Placeholder=""
+                                  Immediate="true"
+                                  Class="custom-field always-float" />
+                </MudItem>
+
+                <MudItem xs="12" sm="4">
+                    <MudSelect @bind-Value="industry"
+                               Label="Industry"
+                               Variant="Variant.Outlined"
+                               Placeholder="Select your Industry"
+                               OpenIcon="@Icons.Material.Filled.Factory"
+                               AdornmentColor="Color.Secondary"
+                               Class="custom-field always-float">
+                        <MudSelectItem Value="@("Technology")">Technology</MudSelectItem>
+                        <MudSelectItem Value="@("Healthcare")">Healthcare</MudSelectItem>
+                        <MudSelectItem Value="@("Finance")">Finance</MudSelectItem>
+                        <MudSelectItem Value="@("Education")">Education</MudSelectItem>
+                        <MudSelectItem Value="@("Manufacturing")">Manufacturing</MudSelectItem>
+                        <MudSelectItem Value="@("Retail")">Retail</MudSelectItem>
+                        <MudSelectItem Value="@("Consulting")">Consulting</MudSelectItem>
+                        <MudSelectItem Value="@("Other")">Other</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs="12" sm="4">
+                    <MudSelect @bind-Value="experienceLevel"
+                               Label="Experience Level"
+                               Variant="Variant.Outlined"
+                               Placeholder="Select your Experience Level"
+                               Adornment="Adornment.End"
+                               AdornmentIcon="@Icons.Material.Filled.TrendingUp"
+                               AdornmentColor="Color.Tertiary"
+                               Class="custom-field always-float">
+                        <MudSelectItem Value="@("Entry")">Entry Level (0-2 years)</MudSelectItem>
+                        <MudSelectItem Value="@("Mid")">Mid Level (3-5 years)</MudSelectItem>
+                        <MudSelectItem Value="@("Senior")">Senior Level (6-10 years)</MudSelectItem>
+                        <MudSelectItem Value="@("Executive")">Executive (10+ years)</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs="12" sm="4">
+                    <MudTextField @bind-Value="linkedinUrl"
+                                  Label="LinkedIn Profile"
+                                  Variant="Variant.Outlined"
+                                  Placeholder="https://linkedin.com/in/yourprofile"
+                                  Immediate="true"
+                                  Class="custom-field always-float" />
+                </MudItem>
+
+                <MudItem xs="12" sm="4">
+                    <MudTextField @bind-Value="portfolioUrl"
+                                  Label="Portfolio/Website"
+                                  Variant="Variant.Outlined"
+                                  Placeholder="https://yourwebsite.com"
+                                  Immediate="true"
+                                  Class="custom-field always-float" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6" Class="mt-4" Style="color: #667eea; font-weight: 600;">
+                        <MudIcon Icon="Icons.Material.Filled.Psychology" Class="mr-1" />
+                        Skills & Preferences
+                    </MudText>
+                    <div class="custom-divider mb-3"></div>
+                </MudItem>
+
+                <MudItem xs="12" sm="4">
+                    <MudSelect @bind-Value="primarySkill"
+                               Label="Primary Skill"
+                               Variant="Variant.Outlined"
+                               Required="true"
+                               RequiredError="Please select your primary skill"
+                               Placeholder="Select your Primary Skill"
+                               Class="custom-field always-float">
+                        <MudSelectItem Value="@("Programming")">Programming</MudSelectItem>
+                        <MudSelectItem Value="@("Design")">Design</MudSelectItem>
+                        <MudSelectItem Value="@("Marketing")">Marketing</MudSelectItem>
+                        <MudSelectItem Value="@("Sales")">Sales</MudSelectItem>
+                        <MudSelectItem Value="@("Management")">Management</MudSelectItem>
+                        <MudSelectItem Value="@("Analytics")">Analytics</MudSelectItem>
+                        <MudSelectItem Value="@("Writing")">Writing</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs="12" sm="4">
+                    <MudSelect T="String"
+                               Label="Soft Skills"
+                               Variant="Variant.Outlined"
+                               Required="true"
+                               RequiredError="Please select your primary skill"
+                               Placeholder="Select your Soft Skills"
+                               Class="custom-field always-float"
+                               MultiSelection="true"
+                               @bind-SelectedValues="SelectedSoftSkills">
+                        @foreach (var skills in softSkills)
+                        {
+                            <MudSelectItem Value="@skills">@skills</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs="12" sm="4">
+                    <MudSelect T="string"
+                               Label="Preferred Programming Languages"
+                               Variant="Variant.Outlined"
+                               Placeholder="Select up to 3 languages"
+                               Class="custom-field always-float"
+                               MultiSelection="true"
+                               @bind-SelectedValues="SelectedLanguages">
+                        @foreach (var lang in programmingLanguages)
+                        {
+                            <MudSelectItem Value="@lang">@lang</MudSelectItem>
+                        }
+                    </MudSelect>
+                    @if (SelectedLanguages.Count() > MaxSelection)
+                    {
+                        <div class="validation-error">
+                            You can only select up to @MaxSelection languages.
+                        </div>
+                    }
+                </MudItem>
+
+                <MudItem xs="12" sm="4">
+                    <MudTextField @bind-Value="salary"
+                                  Label="Expected Salary Range"
+                                  Variant="Variant.Outlined"
+                                  Placeholder="e.g., $80,000 - $120,000"
+                                  Immediate="true"
+                                  Class="custom-field always-float" />
+                </MudItem>
+
+                <MudItem xs="12" sm="4">
+                    <MudSelect @bind-Value="workType"
+                               Label="Work Preference"
+                               Variant="Variant.Outlined"
+                               Placeholder="Select your Work Preference"
+                               Class="custom-field always-float">
+                        <MudSelectItem Value="@("Remote")">Remote</MudSelectItem>
+                        <MudSelectItem Value="@("Hybrid")">Hybrid</MudSelectItem>
+                        <MudSelectItem Value="@("OnSite")">On-Site</MudSelectItem>
+                        <MudSelectItem Value="@("Flexible")">Flexible</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6" Class="mt-4" Style="color: #667eea; font-weight: 600;">
+                        <MudIcon Icon="Icons.Material.Filled.ContactMail" Class="mr-1" />
+                        Communication Preferences
+                    </MudText>
+                    <div class="custom-divider mb-3"></div>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <div class="d-flex flex-row">
+                        <MudRadioGroup T="string" @bind-Value="contactMethod" Required="true" Class="gap-4">
+                            <MudRadio T="string" Value="@("Email")" Color="Color.Primary">Email</MudRadio>
+                            <MudRadio T="string" Value="@("Phone")" Color="Color.Primary">Phone</MudRadio>
+                            <MudRadio T="string" Value="@("SMS")" Color="Color.Primary">SMS</MudRadio>
+                            <MudRadio T="string" Value="@("WhatsApp")" Color="Color.Primary">WhatsApp</MudRadio>
+                            <MudRadio T="string" Value="@("Other")" Color="Color.Primary">Others</MudRadio>
+                        </MudRadioGroup>
+                        @if (contactMethod == "Other")
+                        {
+                            <MudTextField T="string"
+                                          @bind-Value="otherContactMethod"
+                                          Label="Please specify your preferred method"
+                                          Variant="Variant.Outlined"
+                                          Class="mx-5 mt-1 custom-field always-float"
+                                          Required="true"
+                                          RequiredError="This field is required when 'Other' is selected" />
+                        }
+                    </div>
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudText Typo="Typo.h6" Class="mt-4" Style="color: #667eea; font-weight: 600;">
+                        <MudIcon Icon="Icons.Material.Filled.Tune" Class="mr-1" />
+                        Optional Features
+                    </MudText>
+                    <div class="custom-divider mb-3"></div>
+                </MudItem>
+
+                <MudItem xs="12" sm="3">
+                    <MudCheckBox T="bool" @bind-Checked="newsletterSubscription"
+                                 Label="Subscribe to Newsletter"
+                                 Color="Color.Primary"
+                                 Class="custom-checkbox" />
+                </MudItem>
+
+                <MudItem xs="12" sm="3">
+                    <MudCheckBox T="bool" @bind-Checked="marketingEmails"
+                                 Label="Receive Marketing Emails"
+                                 Color="Color.Primary"
+                                 Class="custom-checkbox" />
+                </MudItem>
+
+                <MudItem xs="12" sm="3">
+                    <MudCheckBox T="bool" @bind-Checked="profileVisibility"
+                                 Label="Make Profile Public"
+                                 Color="Color.Primary"
+                                 Class="custom-checkbox" />
+                </MudItem>
+
+                <MudItem xs="12" sm="3">
+                    <MudCheckBox T="bool" @bind-Checked="jobAlerts"
+                                 Label="Enable Job Alerts"
+                                 Color="Color.Primary"
+                                 Class="custom-checkbox" />
+                </MudItem>
+
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="additionalInfo"
+                                  Label="Additional Information"
+                                  Variant="Variant.Outlined"
+                                  Lines="3"
+                                  Placeholder="Tell us more about yourself, your goals, or any special requirements..."
+                                  Immediate="true"
+                                  Class="custom-multiline always-float mt-4" />
+                </MudItem>
+
+                <MudItem xs="12" Class="mt-4 d-flex justify-center gap-4">
+                    <MudButton Variant="Variant.Outlined"
+                               Size="Size.Medium"
+                               OnClick="ResetForm"
+                               Style="border: 2px solid #667eea; color: #667eea; border-radius: 8px; font-weight: 600; text-transform: none;">
+                        Reset Form
+                    </MudButton>
+                    <MudButton Variant="Variant.Outlined"
+                               Size="Size.Medium"
+                               OnClick="ResetForm"
+                               Style="border: 2px solid #667eea; color: #667eea; border-radius: 8px; font-weight: 600; text-transform: none;">
+                        Submit Form
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
+        </MudForm>
+    </MudPaper>
+</MudContainer>
+
+<style>
+    /* Always float labels at the top */
+    .always-float .mud-input-label {
+        transform: translate(12px, -11px) scale(0.75) !important;
+        background-color: white;
+        padding: 0 4px;
+        color: #667eea;
+        font-weight: 500;
+        font-size: 0.8rem;
+    }
+
+    /* Custom styles for single-line input fields */
+    .custom-field .mud-input-control {
+        margin-bottom: 0px !important;
+        padding-top: 2px !important;
+    }
+
+    .custom-field .mud-input {
+        height: 42px; /* Adjusted height from 38px to 42px for 0.1cm increase */
+        font-size: 0.9rem;
+        display: flex; /* Use flexbox to align content */
+        align-items: center; /* Vertically centers the text */
+    }
+
+    /* NEW: Custom styles specifically for multiline text fields */
+    .custom-multiline .mud-input-control {
+        margin-bottom: 0px !important;
+        padding-top: 2px !important;
+    }
+
+    .custom-multiline .mud-input {
+        min-height: 100px; /* Allow for multiple lines */
+        height: auto; /* Auto height to accommodate content */
+        font-size: 0.9rem;
+        display: block; /* Use block instead of flex for multiline */
+        align-items: flex-start; /* Align text to top */
+        padding: 0px 8px; /* Reduced top padding to bring text closer to label */
+        line-height: 1.4; /* Better line spacing */
+    }
+
+    .custom-multiline textarea {
+        line-height: 1.4;
+        padding: 4px 8px; /* Reduced padding to bring text closer to top */
+        resize: vertical; /* Allow vertical resizing only */
+    }
+
+    /* Shared border styles for both single-line and multiline fields */
+    .custom-field .mud-input-outlined .mud-input-outlined-border,
+    .custom-multiline .mud-input-outlined .mud-input-outlined-border {
+        border-color: rgba(102, 126, 234, 0.3);
+        border-width: 2px;
+        border-radius: 8px;
+    }
+
+    .custom-field .mud-input-outlined:hover .mud-input-outlined-border,
+    .custom-multiline .mud-input-outlined:hover .mud-input-outlined-border {
+        border-color: #667eea;
+    }
+
+    .custom-field .mud-input-outlined.mud-input-focused .mud-input-outlined-border,
+    .custom-multiline .mud-input-outlined.mud-input-focused .mud-input-outlined-border {
+        border-color: #667eea;
+        box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+    }
+
+    .custom-checkbox .mud-checkbox-root {
+        color: #667eea;
+        transform: scale(0.8);
+    }
+
+    .mud-paper {
+        transition: all 0.3s ease;
+    }
+
+        .mud-paper:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+    .mud-button:hover {
+        transform: translateY(-1px);
+        transition: all 0.2s ease;
+    }
+
+    /* Custom divider style */
+    .custom-divider {
+        height: 1px;
+        background: linear-gradient(90deg, #667eea);
+        border-radius: 2px;
+        margin-top: 8px;
+    }
+
+    /* Make radio button circle smaller */
+    .small-radio .mud-radio-button {
+        transform: scale(0.8); /* adjust 0.7–0.9 as you like */
+    }
+
+    /* Make the label text smaller */
+    .small-radio .mud-radio-content {
+        font-size: 0.8rem; /* default is ~1rem */
+    }
+</style>
+
+@code {
+    MudForm form;
+    bool isFormValid;
+
+    // Personal Information
+    public string firstName { get; set; } = "";
+    public string lastName { get; set; } = "";
+    public string email { get; set; } = "";
+    public string phoneNumber { get; set; } = "";
+    public string country { get; set; } = "";
+    // New property for Gender
+    public string gender { get; set; } = "";
+    public DateTime? DOB = DateTime.Today;
+
+    // Professional Information
+    public string jobTitle { get; set; } = "";
+    public string company { get; set; } = "";
+    public string industry { get; set; } = "";
+    public string experienceLevel { get; set; } = "";
+    public string linkedinUrl { get; set; } = "";
+    public string portfolioUrl { get; set; } = "";
+
+    // Skills and Preferences
+    public string primarySkill { get; set; } = "";
+    private List<string> selectedSoftSkills = new List<string>();
+    private List<string> selectedLanguages = new List<string>(); // both the same thing, just this one is field, and the up there is auto property
+    public string salary { get; set; } = "";
+    public string workType { get; set; } = "";
+
+    // Communication Preferences
+    public string contactMethod { get; set; } = "";
+    public string otherContactMethod { get; set; } = "";
+
+    // Optional Features
+    public bool newsletterSubscription { get; set; } = false;
+    public bool marketingEmails { get; set; } = false;
+    public bool profileVisibility { get; set; } = false;
+    public bool jobAlerts { get; set; } = true;
+
+    // Additional Information
+    public string additionalInfo { get; set; } = "";
+
+    private readonly string[] countries =
+    {
+    "Australia", "Brazil", "Canada", "China", "Egypt",
+    "France", "Germany", "India", "Indonesia", "Italy",
+    "Japan", "Malaysia", "Mexico", "New Zealand", "Singapore",
+    "South Korea", "Spain", "Thailand", "United Kingdom", "United States"
+    };
+
+    private const int MaxSelection = 3;
+
+    private readonly string[] programmingLanguages =
+       {
+        "C#", "JavaScript", "Python", "Java", "TypeScript",
+        "Go", "Rust", "C++", "PHP", "Swift", "Ruby",
+        "Kotlin", "Dart"
+    };
+
+    private IEnumerable<string> SelectedLanguages
+    {
+        get => selectedLanguages;
+        set
+        {
+            if (value != null && value.Count() <= MaxSelection)
+            {
+                selectedLanguages = value.ToList();
+            }
+            StateHasChanged(); // This is important to re-render the component
+        }
+    }
+
+    private IEnumerable<string> SelectedSoftSkills
+    {
+        get => selectedSoftSkills;
+        set
+        {
+            selectedSoftSkills = value.ToList();
+            StateHasChanged(); // This is important to re-render the component
+        }
+    }
+
+    private string ValidationSelectonLimit(IEnumerable<string> values)
+    {
+        if (values != null && values.Count() > MaxSelection)
+        {
+            return "You can only select up to " + MaxSelection + " languages.";
+        }
+        return null;
+    }
+
+    private readonly string[] softSkills =
+    {
+        "Communication","Teamwork","Problem-Solving","Adaptability",
+        "Leadership","Creativity","Time Management","Critical Thinking","Emotional Intelligence"
+    };
+
+    private void selectOtherRadio()
+    {
+
+        contactMethod = "Other";
+    }
+
+    private void valuechg()
+    {
+        Console.WriteLine(contactMethod);
+    }
+
+    private async Task SubmitForm()
+    {
+        await form.Validate();
+
+        if (form.IsValid)
+        {
+            // Here you would typically send the data to your backend
+            // For demo purposes, we'll just show a success message
+            Console.WriteLine("Form submitted successfully!");
+
+            // You could add a Snackbar notification here
+            // Snackbar.Add("Application submitted successfully!", Severity.Success);
+        }
+    }
+
+
+    private void ResetForm()
+    {
+        firstName = "";
+        lastName = "";
+        email = "";
+        phoneNumber = "";
+        country = "";
+        gender = ""; // Reset the new gender property
+        jobTitle = "";
+        company = "";
+        industry = "";
+        experienceLevel = "";
+        linkedinUrl = "";
+        portfolioUrl = "";
+        primarySkill = "";
+        selectedSoftSkills.Clear();
+        selectedLanguages.Clear();
+        salary = "";
+        workType = "";
+        contactMethod = "";
+        newsletterSubscription = false;
+        marketingEmails = false;
+        profileVisibility = false;
+        jobAlerts = true;
+        additionalInfo = "";
+
+        form.ResetAsync();
+    }
+}
