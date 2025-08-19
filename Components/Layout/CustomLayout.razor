@@ -1,6 +1,5 @@
 ﻿@inherits LayoutComponentBase
 
-
 <MudThemeProvider Theme="CustomTheme" />
 <MudPopoverProvider />
 
@@ -24,7 +23,16 @@
         <MudStack Row="true">
             <MudIconButton Icon="@Icons.Material.Filled.Notifications" Title="Favorite" />
             <MudIconButton Icon="@Icons.Material.Filled.Settings" Title="Favorite" />
-            <MudIconButton Icon="@Icons.Material.Filled.Person"  />
+            <MudMenu AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.BottomCenter">
+                <ActivatorContent>
+                    <MudIconButton Icon="@Icons.Material.Filled.Person" />
+                </ActivatorContent>
+                <ChildContent>
+                    <MudMenuItem Label="Profile" />
+                    <MudMenuItem Label="Theme" />
+                    <MudMenuItem Label="Usage" />
+                </ChildContent>
+            </MudMenu>
         </MudStack>
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" Elevation="2">
@@ -34,9 +42,10 @@
         <MudDivider DividerType="DividerType.Inset" Class="mx-2 my-3" />
         <MudStack> @*Add Match to each navlink*@
             <MudNavMenu Rounded="true" Margin="Margin.Dense" Color="Color.Secondary" Class="pa-2">
-                <MudNavLink Match="NavLinkMatch.Prefix" Href="/" Class="sidebar-nav-item" Icon="@Icons.Material.Filled.Dashboard">Home</MudNavLink>
-                <MudNavLink Match="NavLinkMatch.Prefix" Class="sidebar-nav-item" Href="/components/navmenu" Icon="@Icons.Material.Filled.Storage">Servers</MudNavLink>
-                <MudNavLink Match="NavLinkMatch.Prefix" Href="/thelab" Class="sidebar-nav-item" Icon="@Icons.Material.Filled.Science">The Lab</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.All" Href="/" Class="sidebar-nav-item" Icon="@Icons.Material.Filled.Dashboard">Home</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.Prefix" Class="sidebar-nav-item" Href="/vacancy-data" Icon="@Icons.Material.Filled.Storage">Table 1</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.Prefix" Class="sidebar-nav-item" Href="/vacancy-data2" Icon="@Icons.Material.Filled.Storage">Table 2</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.Prefix" Class="sidebar-nav-item" Href="/auth/logout.html" Icon="@Icons.Material.Filled.Storage">Logout</MudNavLink>
             </MudNavMenu>
         </MudStack>
         
