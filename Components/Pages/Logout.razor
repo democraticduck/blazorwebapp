@@ -1,0 +1,24 @@
+﻿@page "/logout"
+@using MudBlazor
+@inject NavigationManager Nav
+
+<div class="bg"></div>
+
+<header class="brand">
+    <img src="images/logo.png" alt="eLDS Logo" class="brand__icon" />
+    <span class="brand__word">eLDS</span>
+</header>
+
+<div class="wrap">
+    <MudPaper Class="card" Elevation="24" Outlined="true">
+        <MudText Typo="Typo.h4" Align="Align.Center" Class="title">Logout</MudText>
+        <MudText Align="Align.Center" Class="mt" Style="margin-bottom:24px;">
+            You have successfully logged out.
+        </MudText>
+
+        <MudButton Variant="Variant.Filled" Color="Color.Error" Class="btn"
+                   OnClick="@(()=> Nav.NavigateTo("/login"))">
+            Log in
+        </MudButton>
+    </MudPaper>
+</div>

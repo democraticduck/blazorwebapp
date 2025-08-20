@@ -1,0 +1,38 @@
+﻿@page "/login"
+@using MudBlazor
+@inject NavigationManager Nav
+
+<!-- Background -->
+<div class="bg"></div>
+
+<!-- Top-left brand -->
+<header class="brand">
+  <img src="images/logo.png" alt="eLDS Logo" class="brand__icon" />
+  <span class="brand__word">eLDS</span>
+</header>
+
+<!-- Center card -->
+<div class="wrap">
+  <MudPaper Class="card" Elevation="24" Square="false" Outlined="true">
+    <MudText Typo="Typo.h4" Align="Align.Center" Class="title">Login</MudText>
+
+    <MudForm>
+      <MudTextField Label="Email" Placeholder="username@gmail.com"
+                    Variant="Variant.Filled" Class="input" />
+
+      <MudTextField Label="Password" Placeholder="Password"
+                    Variant="Variant.Filled" InputType="InputType.Password"
+                    Adornment="Adornment.End"
+                    AdornmentIcon="@Icons.Material.Filled.VisibilityOff"
+                    Class="input mt" />
+
+      <MudLink Href="#" Class="link">Forgot Password?</MudLink>
+
+      <!-- Navigate to dashboard (/) when clicked -->
+      <MudButton Variant="Variant.Filled" Color="Color.Error" Class="btn"
+                 OnClick="@(()=> Nav.NavigateTo("/"))">
+        Sign in
+      </MudButton>
+    </MudForm>
+  </MudPaper>
+</div>

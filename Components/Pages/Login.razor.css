@@ -1,0 +1,118 @@
+﻿:root {
+    --brand: #e30613;
+    --ink: #ffffff;
+    --ink-muted: #cfd4dc;
+    --bg-dark: #0b0d12;
+    --glass: rgba(32,35,42,.52);
+    --glass-stroke: rgba(255,255,255,.35);
+}
+
+/* Fullscreen background */
+.bg {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(1200px 800px at 50% 30%, rgba(0,0,0,.15), rgba(0,0,0,.65)), url('/images/bg.jpg') center/cover no-repeat fixed;
+    z-index: -2;
+}
+
+/* Brand (top-left) */
+.brand {
+    position: fixed;
+    top: 20px;
+    left: 26px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 3;
+}
+
+.brand__icon {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+}
+
+.brand__word {
+    font-family: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 34px;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,.45);
+}
+
+/* Centering wrapper */
+.wrap {
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+}
+
+/* Glass card look */
+.card {
+    width: min(720px, 92vw);
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    background: var(--glass);
+    border: 1px solid var(--glass-stroke);
+    border-radius: 26px;
+    color: #fff;
+    padding: 38px clamp(28px, 4vw, 56px) 44px;
+}
+
+/* Title spacing */
+.title {
+    margin: 0 0 24px 0;
+}
+
+/* Input tweaks (MudTextField wrapper) */
+.input .mud-input-root {
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.mt {
+    margin-top: 12px;
+}
+
+/* Link + Button */
+.link {
+    display: inline-block;
+    margin: 12px 2px 18px;
+    font-size: 12px;
+    color: var(--ink-muted);
+    text-decoration: none;
+}
+
+    .link:hover {
+        color: #ffffff;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+.btn {
+    width: 100%;
+    height: 48px;
+    border-radius: 10px;
+    font-weight: 600;
+    letter-spacing: .2px;
+    background: linear-gradient(180deg, #ff3b3b, var(--brand)) !important;
+    box-shadow: 0 10px 30px rgba(227,6,19,.45), inset 0 -2px 0 rgba(0,0,0,.15);
+}
+
+@media (max-width:560px) {
+    .brand__word {
+        font-size: 26px
+    }
+
+    .brand__icon {
+        width: 28px;
+        height: 28px
+    }
+
+    .card {
+        border-radius: 22px;
+        padding: 28px 18px 32px;
+    }
+}
