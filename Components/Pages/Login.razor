@@ -1,4 +1,5 @@
 @page "/login"
+@layout blazorwebapp.Components.Layout.EmptyLayout
 @using MudBlazor
 @inject NavigationManager Nav
 
@@ -13,7 +14,7 @@
 
 <!-- Center card -->
 <div class="wrap">
-    <MudPaper Class="card" Elevation="24" Square="false" Outlined="true">
+    <MudPaper Class="card" Elevation="0" Outlined="false" Square="false">
         <MudText Typo="Typo.h4" Align="Align.Center" Class="title">Login</MudText>
 
         <MudForm>
