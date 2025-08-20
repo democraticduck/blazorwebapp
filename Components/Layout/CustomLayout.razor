@@ -14,10 +14,10 @@
         <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
             <MudIconButton Icon="@Icons.Material.Filled.Menu" Edge="Edge.Start" OnClick="DrawerToggle" />
             <MudSpacer />
-            <MudText Color="Color.Dark">Overview</MudText>
+            <MudText Color="Color.Dark"><SectionOutlet SectionName="title" /></MudText>
         </MudHidden>
         <MudHidden Breakpoint="Breakpoint.SmAndDown">
-            <MudText Color="Color.Dark">Overview</MudText>
+            <MudText Color="Color.Dark"><SectionOutlet SectionName="title" /></MudText>
         </MudHidden>
         <MudSpacer />
         <MudStack Row="true">
@@ -45,6 +45,7 @@
                 <MudNavLink Match="NavLinkMatch.All" Href="/" Class="sidebar-nav-item" Icon="@Icons.Material.Filled.Dashboard">Home</MudNavLink>
                 <MudNavLink Match="NavLinkMatch.Prefix" Class="sidebar-nav-item" Href="/vacancy-data" Icon="@Icons.Material.Filled.Storage">Table 1</MudNavLink>
                 <MudNavLink Match="NavLinkMatch.Prefix" Class="sidebar-nav-item" Href="/vacancy-data2" Icon="@Icons.Material.Filled.Storage">Table 2</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.Prefix" Class="sidebar-nav-item" Href="/form" Icon="@Icons.Material.Filled.Storage">Form</MudNavLink>
                 <MudNavLink Match="NavLinkMatch.Prefix" Class="sidebar-nav-item" Href="/auth/logout.html" Icon="@Icons.Material.Filled.Storage">Logout</MudNavLink>
             </MudNavMenu>
         </MudStack>
