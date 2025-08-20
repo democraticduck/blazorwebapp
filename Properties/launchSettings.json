@@ -23,7 +23,7 @@
         "dotnetRunMessages": true,
         "launchBrowser": true,
         "applicationUrl": "https://localhost:7231;http://localhost:5105",
-        "launchUrl": "login",
+        "launchUrl": "auth/login.html",
         "environmentVariables": {
           "ASPNETCORE_ENVIRONMENT": "Development"
         }
@@ -31,7 +31,7 @@
       "IIS Express": {
         "commandName": "IISExpress",
         "launchBrowser": true,
-        "launchUrl": "login",
+        "launchUrl": "auth/login.html",
         "environmentVariables": {
           "ASPNETCORE_ENVIRONMENT": "Development"
         }
