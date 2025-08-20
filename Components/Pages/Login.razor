@@ -1,4 +1,4 @@
-﻿@page "/login"
+@page "/login"
 @using MudBlazor
 @inject NavigationManager Nav
 
@@ -7,32 +7,40 @@
 
 <!-- Top-left brand -->
 <header class="brand">
-  <img src="images/logo.png" alt="eLDS Logo" class="brand__icon" />
-  <span class="brand__word">eLDS</span>
+    <img src="images/logo.png" alt="eLDS Logo" class="brand__icon" />
+    <span class="brand__word">eLDS</span>
 </header>
 
 <!-- Center card -->
 <div class="wrap">
-  <MudPaper Class="card" Elevation="24" Square="false" Outlined="true">
-    <MudText Typo="Typo.h4" Align="Align.Center" Class="title">Login</MudText>
+    <MudPaper Class="card" Elevation="24" Square="false" Outlined="true">
+        <MudText Typo="Typo.h4" Align="Align.Center" Class="title">Login</MudText>
 
-    <MudForm>
-      <MudTextField Label="Email" Placeholder="username@gmail.com"
-                    Variant="Variant.Filled" Class="input" />
+        <MudForm>
+            <MudTextField T="string" Label="Email"
+                          @bind-Value="Email"
+                          Variant="Variant.Filled" Class="input" />
 
-      <MudTextField Label="Password" Placeholder="Password"
-                    Variant="Variant.Filled" InputType="InputType.Password"
-                    Adornment="Adornment.End"
-                    AdornmentIcon="@Icons.Material.Filled.VisibilityOff"
-                    Class="input mt" />
+            <MudTextField T="string" Label="Password"
+                          @bind-Value="Password"
+                          Variant="Variant.Filled"
+                          InputType="InputType.Password"
+                          Adornment="Adornment.End"
+                          AdornmentIcon="@Icons.Material.Filled.VisibilityOff"
+                          Class="input mt" />
 
-      <MudLink Href="#" Class="link">Forgot Password?</MudLink>
+            <MudLink Href="#" Class="link">Forgot Password?</MudLink>
 
-      <!-- Navigate to dashboard (/) when clicked -->
-      <MudButton Variant="Variant.Filled" Color="Color.Error" Class="btn"
-                 OnClick="@(()=> Nav.NavigateTo("/"))">
-        Sign in
-      </MudButton>
-    </MudForm>
-  </MudPaper>
+            <!-- Go to dashboard (/) -->
+            <MudButton Variant="Variant.Filled" Color="Color.Error" Class="btn"
+                       OnClick="@(()=> Nav.NavigateTo("/"))">
+                Sign in
+            </MudButton>
+        </MudForm>
+    </MudPaper>
 </div>
+
+@code {
+    private string? Email { get; set; }
+    private string? Password { get; set; }
+}
