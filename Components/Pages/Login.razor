@@ -3,18 +3,16 @@
 @using MudBlazor
 @inject NavigationManager Nav
 
-<!-- Background -->
 <div class="bg"></div>
 
-<!-- Top-left brand -->
 <header class="brand">
     <img src="images/logo.png" alt="eLDS Logo" class="brand__icon" />
     <span class="brand__word">eLDS</span>
 </header>
 
-<!-- Center card -->
 <div class="wrap">
-    <MudPaper Class="card" Elevation="0" Outlined="false" Square="false">
+    <!-- rename Class from 'card' -> 'auth-card' to avoid Bootstrap/Mud conflicts -->
+    <MudPaper Class="auth-card" Elevation="0" Outlined="false" Square="false">
         <MudText Typo="Typo.h4" Align="Align.Center" Class="title">Login</MudText>
 
         <MudForm>
@@ -32,7 +30,6 @@
 
             <MudLink Href="#" Class="link">Forgot Password?</MudLink>
 
-            <!-- Go to dashboard (/) -->
             <MudButton Variant="Variant.Filled" Color="Color.Error" Class="btn"
                        OnClick="@(()=> Nav.NavigateTo("/"))">
                 Sign in
