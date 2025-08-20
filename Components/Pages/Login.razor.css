@@ -1,13 +1,12 @@
-﻿:root {
+:root {
     --brand: #e30613;
     --ink: #ffffff;
     --ink-muted: #cfd4dc;
-    --bg-dark: #0b0d12;
     --glass: rgba(32,35,42,.52);
     --glass-stroke: rgba(255,255,255,.35);
 }
 
-/* Fullscreen background */
+/* background */
 .bg {
     position: fixed;
     inset: 0;
@@ -15,7 +14,7 @@
     z-index: -2;
 }
 
-/* Brand (top-left) */
+/* brand */
 .brand {
     position: fixed;
     top: 20px;
@@ -33,7 +32,7 @@
 }
 
 .brand__word {
-    font-family: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+    font-family: 'Playfair Display','Georgia','Times New Roman',serif;
     font-style: italic;
     font-weight: 600;
     font-size: 34px;
@@ -41,7 +40,7 @@
     text-shadow: 0 1px 2px rgba(0,0,0,.45);
 }
 
-/* Centering wrapper */
+/* center wrapper */
 .wrap {
     min-height: 100dvh;
     display: grid;
@@ -49,34 +48,52 @@
     padding: 24px;
 }
 
-/* Glass card look */
-.card {
-    width: min(720px, 92vw);
+/* GLASS CARD — target MudPaper via CSS isolation */
+::deep(.mud-paper.card) {
+    background: var(--glass) !important;
     backdrop-filter: blur(10px) saturate(140%);
     -webkit-backdrop-filter: blur(10px) saturate(140%);
+    border: 1px solid var(--glass-stroke);
+    border-radius: 26px;
+    color: #fff;
+    box-shadow: none;
+    width: min(720px, 92vw);
+    padding: 38px clamp(28px, 4vw, 56px) 44px;
+}
+
+/* if you ever switch to <div class="card"> keep the same look */
+.card {
+    width: min(720px, 92vw);
     background: var(--glass);
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
     border: 1px solid var(--glass-stroke);
     border-radius: 26px;
     color: #fff;
     padding: 38px clamp(28px, 4vw, 56px) 44px;
 }
 
-/* Title spacing */
+/* title */
 .title {
-    margin: 0 0 24px 0;
+    margin: 0 0 24px
 }
 
-/* Input tweaks (MudTextField wrapper) */
-.input .mud-input-root {
-    background-color: #fff;
-    border-radius: 10px;
+/* INPUTS — pierce into MudBlazor’s internals */
+::deep(.input .mud-input-root) {
+    background-color: #fff !important;
+    border-radius: 10px !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.5);
+}
+
+::deep(.input .mud-input-root .mud-input) {
+    border-bottom: none !important;
 }
 
 .mt {
-    margin-top: 12px;
+    margin-top: 12px
 }
 
-/* Link + Button */
+/* link + button */
 .link {
     display: inline-block;
     margin: 12px 2px 18px;
@@ -86,7 +103,7 @@
 }
 
     .link:hover {
-        color: #ffffff;
+        color: #fff;
         text-decoration: underline;
         text-underline-offset: 3px;
     }
@@ -98,9 +115,11 @@
     font-weight: 600;
     letter-spacing: .2px;
     background: linear-gradient(180deg, #ff3b3b, var(--brand)) !important;
+    color: #fff !important;
     box-shadow: 0 10px 30px rgba(227,6,19,.45), inset 0 -2px 0 rgba(0,0,0,.15);
 }
 
+/* responsive */
 @media (max-width:560px) {
     .brand__word {
         font-size: 26px
@@ -111,7 +130,7 @@
         height: 28px
     }
 
-    .card {
+    ::deep(.mud-paper.card), .card {
         border-radius: 22px;
         padding: 28px 18px 32px;
     }
