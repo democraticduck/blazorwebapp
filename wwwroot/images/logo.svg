@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Placeholder logo. Replace this file with your real SVG/PNG.
+       Keeps similar proportions to the provided emblem. -->
+  <defs>
+    <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
+      <stop stop-color="#ff4d4d" offset="0"/>
+      <stop stop-color="#e30613" offset="1"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="12" fill="url(#g)"/>
+  <g fill="#fff" opacity="0.96">
+    <path d="M20 20h24l-6 6H26z"/>
+    <path d="M20 38h24l-6 6H26z"/>
+    <rect x="30" y="30" width="4" height="4" rx="1"/>
+  </g>
+</svg>
