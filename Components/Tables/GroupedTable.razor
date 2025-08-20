@@ -1,0 +1,447 @@
+﻿@typeparam TItem
+@using MudBlazor
+@using blazorwebapp.Components.Buttons
+@using blazorwebapp.Components.Tables
+
+<style>
+    /* Custom CSS for collapsible group content */
+    .group-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-in-out;
+    }
+
+        .group-content.open {
+            max-height: 1000px; /* A large value to allow smooth transition for any content size */
+        }
+
+    .rotate-icon {
+        transform: rotate(0deg);
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .rotate-icon.rotated {
+            transform: rotate(180deg);
+        }
+
+    .table-container {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #FFFFFF, #FFFFFF);
+        padding: 2rem;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .table-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 1.5rem;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        width: 100%;
+        max-width: 72rem;
+    }
+
+    .header-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+    }
+
+    .header-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #424242;
+        margin: 0;
+    }
+
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .search-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        border-radius: 0.5rem;
+        border: 1px solid #E0E0E0;
+        background: #F5F5F5;
+        padding: 0.5rem 1rem;
+        width: 18rem;
+    }
+
+    .search-icon {
+        width: 1.25rem;
+        height: 1.25rem;
+        color: #9E9E9E;
+        margin-right: 0.5rem;
+    }
+
+    .group-card {
+        border-radius: 1rem;
+        border: 1px solid #E0E0E0;
+        overflow: hidden;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        margin-bottom: 1rem;
+    }
+
+    .group-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #F5F5F5;
+        padding: 1rem;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+        .group-header:hover {
+            background-color: #EEEEEE;
+        }
+
+    .group-header-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #424242;
+    }
+
+    .status-open {
+        background: rgba(33, 150, 243, 0.1);
+        color: #2962FF;
+        font-size: 0.75rem;
+        font-weight: 500;
+        padding: 0.25rem 0.625rem;
+        border-radius: 9999px;
+    }
+
+    .status-closed {
+        background: #EEEEEE;
+        color: #616161;
+        font-size: 0.75rem;
+        font-weight: 500;
+        padding: 0.25rem 0.625rem;
+        border-radius: 9999px;
+    }
+
+    .pagination-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 1.5rem;
+    }
+
+    .items-per-page {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid #E0E0E0;
+        background: #F5F5F5;
+        padding: 0.5rem 1rem;
+        color: #616161;
+        cursor: pointer;
+    }
+
+    .pagination-numbers {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #616161;
+    }
+
+    .page-number {
+        border-radius: 0.5rem;
+        border: 1px solid #E0E0E0;
+        background: white;
+        padding: 0.5rem 1rem;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+        .page-number.active {
+            background: #2196F3;
+            color: white;
+            border-color: #2196F3;
+        }
+
+    .nav-buttons {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .nav-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid #E0E0E0;
+        background: white;
+        padding: 0.5rem 1rem;
+        color: #616161;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+        .nav-btn:hover {
+            background: #F5F5F5;
+        }
+
+    /* Custom MudBlazor overrides */
+    .mud-table {
+        border-radius: 1rem;
+        overflow: hidden;
+    }
+
+    .mud-table-head {
+        background-color: #fff1afff !important;
+    }
+
+        .mud-table-head .mud-table-cell {
+            color: black !important;
+            font-weight: 500 !important;
+            padding: 0.75rem 1.5rem !important;
+            height: 3rem !important;
+            text-align: center;
+        }
+
+    .mud-table-body .mud-table-row {
+        height: 3rem !important;
+    }
+
+    .mud-table-body .mud-table-cell {
+        padding: 0.75rem 1.5rem !important;
+        color: #616161 !important;
+        font-size: 0.875rem !important;
+        text-align: center;
+    }
+
+    .mud-input-control {
+        background: transparent !important;
+    }
+
+        .mud-input-control .mud-input {
+            background: transparent !important;
+            color: #616161 !important;
+        }
+
+            .mud-input-control .mud-input::placeholder {
+                color: #9E9E9E !important;
+            }
+</style>
+
+<div class="table-container">
+    <div class="table-card">
+        <!-- Header -->
+        <div class="header-section">
+            <h1 class="header-title">@Title</h1>
+            <div class="header-actions">
+                <!-- Search Bar -->
+                @if (ShowSearch)
+                {
+                    <div class="search-container">
+                        <MudIcon Icon="@Icons.Material.Filled.Search" Class="search-icon" />
+                        <MudTextField @bind-Value="searchText"
+                                      Placeholder="Search"
+                                      Variant="Variant.Text"
+                                      DisableUnderLine="true"
+                                      Style="background: transparent; width: 100%;" />
+                    </div>
+                }
+
+                <!-- Action Buttons -->
+                @if (ShowFilter)
+                {
+                    <CustomButton Type="CustomButton.ButtonType.Filter" Label="Filter" OnClick="@OnFilterClick" />
+                }
+
+                @if (ShowAdd)
+                {
+                    <CustomButton Type="CustomButton.ButtonType.Add" Label="Add New" OnClick="@OnAddClick" />
+                }
+
+                @if (ShowEdit)
+                {
+                    <CustomButton Type="CustomButton.ButtonType.Edit" OnClick="@OnEditClick" />
+                }
+
+                @if (ShowDelete)
+                {
+                    <CustomButton Type="CustomButton.ButtonType.Delete" OnClick="@OnDeleteClick" />
+                }
+            </div>
+        </div>
+
+        <!-- Grouped Tables Container -->
+        <div>
+            @for (int i = 0; i < TableGroups.Count; i++)
+            {
+                int groupIndex = i;
+                var group = TableGroups[i];
+
+                <div class="group-card">
+                    <!-- Group Header (clickable) -->
+                    <div class="group-header" @onclick="() => ToggleGroup(groupIndex)">
+                        <h2 class="group-header-title">@group.GroupName</h2>
+                        <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowDown"
+                                 Class="@($"rotate-icon {(groupStates[groupIndex] ? "rotated" : "")}")"
+                                 Style="color: #9E9E9E;" />
+                    </div>
+                    <!-- Group Content (collapsible) -->
+                    <div class="@($"group-content {(groupStates[groupIndex] ? "open" : "")}")">
+                        <MudTable Items="@group.Data" Hover="false" Striped="false" Dense="false" Class="mud-table">
+                            <HeaderContent>
+                                @foreach (var column in TableColumns)
+                                {
+                                    <MudTh>@column.Header</MudTh>
+                                }
+                            </HeaderContent>
+                            <RowTemplate>
+                                @foreach (var column in TableColumns)
+                                {
+                                    <MudTd DataLabel="@column.Header">
+                                        @if (column.CellTemplate != null)
+                                        {
+                                            @column.CellTemplate(context)
+                                        }
+                                        else
+                                        {
+                                            @GetPropertyValue(context, column.PropertyName)
+                                        }
+                                    </MudTd>
+                                }
+                            </RowTemplate>
+                        </MudTable>
+
+                        <!-- Pagination per group -->
+                        @if (ShowPagination)
+                        {
+                            <div class="pagination-container">
+                                <MudMenu>
+                                    <ActivatorContent>
+                                        <div class="items-per-page">
+                                            <span>@itemsPerPage Item</span>
+                                            <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowDown" Size="Size.Small" />
+                                        </div>
+                                    </ActivatorContent>
+                                    <ChildContent>
+                                        <MudMenuItem OnClick="() => SetItemsPerPage(5)">5 Item</MudMenuItem>
+                                        <MudMenuItem OnClick="() => SetItemsPerPage(10)">10 Item</MudMenuItem>
+                                        <MudMenuItem OnClick="() => SetItemsPerPage(20)">20 Item</MudMenuItem>
+                                    </ChildContent>
+                                </MudMenu>
+
+                                <div class="pagination-numbers">
+                                    <span class="page-number @(1 == currentPage ? "active" : "")" @onclick="() => GoToPage(1)">1</span>
+                                    <span class="page-number @(2 == currentPage ? "active" : "")" @onclick="() => GoToPage(2)">2</span>
+                                    <span class="page-number @(3 == currentPage ? "active" : "")" @onclick="() => GoToPage(3)">3</span>
+                                    <span class="page-number @(4 == currentPage ? "active" : "")" @onclick="() => GoToPage(4)">4</span>
+                                    <span class="page-number @(5 == currentPage ? "active" : "")" @onclick="() => GoToPage(5)">5</span>
+                                    <span style="font-weight: 700;">...</span>
+                                    <span class="page-number">15</span>
+                                </div>
+
+                                <div class="nav-buttons">
+                                    <div class="nav-btn" @onclick="PreviousPage">
+                                        <MudIcon Icon="@Icons.Material.Filled.ChevronLeft" Size="Size.Small" />
+                                        <span>Previous</span>
+                                    </div>
+                                    <div class="nav-btn" @onclick="NextPage">
+                                        <span>Next</span>
+                                        <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; } = "Grouped Data Table";
+    [Parameter] public List<TableGroup<TItem>> TableGroups { get; set; } = new();
+    [Parameter] public List<TableColumn<TItem>> TableColumns { get; set; } = new();
+
+    // Button visibility parameters
+    [Parameter] public bool ShowSearch { get; set; } = true;
+    [Parameter] public bool ShowFilter { get; set; } = true;
+    [Parameter] public bool ShowAdd { get; set; } = true;
+    [Parameter] public bool ShowEdit { get; set; } = true;
+    [Parameter] public bool ShowDelete { get; set; } = true;
+    [Parameter] public bool ShowPagination { get; set; } = true;
+
+    // Action callbacks
+    [Parameter] public EventCallback OnAddClick { get; set; }
+    [Parameter] public EventCallback OnEditClick { get; set; }
+    [Parameter] public EventCallback OnDeleteClick { get; set; }
+    [Parameter] public EventCallback OnFilterClick { get; set; }
+
+    private string searchText = "";
+    private int itemsPerPage = 10;
+    private int currentPage = 2; // Set to 2 to match the original design
+    private bool[] groupStates = Array.Empty<bool>();
+
+    protected override void OnParametersSet()
+    {
+        // Initialize group states when TableGroups changes
+        if (groupStates.Length != TableGroups.Count)
+        {
+            groupStates = new bool[TableGroups.Count]; // All groups start collapsed
+        }
+    }
+
+    private void ToggleGroup(int index)
+    {
+        if (index >= 0 && index < groupStates.Length)
+        {
+            groupStates[index] = !groupStates[index];
+            StateHasChanged();
+        }
+    }
+
+    private void SetItemsPerPage(int items)
+    {
+        itemsPerPage = items;
+        StateHasChanged();
+    }
+
+    private void GoToPage(int page)
+    {
+        currentPage = page;
+        StateHasChanged();
+    }
+
+    private void PreviousPage()
+    {
+        if (currentPage > 1)
+        {
+            currentPage--;
+            StateHasChanged();
+        }
+    }
+
+    private void NextPage()
+    {
+        if (currentPage < 15)
+        {
+            currentPage++;
+            StateHasChanged();
+        }
+    }
+
+    private object GetPropertyValue(TItem item, string propertyName)
+    {
+        if (string.IsNullOrEmpty(propertyName) || item == null)
+            return "";
+
+        var property = typeof(TItem).GetProperty(propertyName);
+        return property?.GetValue(item)?.ToString() ?? "";
+    }
+}

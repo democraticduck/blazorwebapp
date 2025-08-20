@@ -1,0 +1,114 @@
+﻿@page "/vacancy-data-grouped"
+@using MudBlazor
+@using blazorwebapp.Components.Tables
+@using blazorwebapp.Models
+@inject NavigationManager Navigation
+
+<SectionContent SectionName="title">
+    Vacancy Data Groups
+</SectionContent>
+
+<GroupedTable TItem="VacancyItem"
+              Title="Vacancy Data"
+              TableGroups="@tableGroups"
+              TableColumns="@tableColumns"
+              ShowSearch="true"
+              ShowFilter="true"
+              ShowAdd="true"
+              ShowEdit="true"
+              ShowDelete="true"
+              ShowPagination="true"
+              OnAddClick="@OnAddClick"
+              OnEditClick="@OnEditClick"
+              OnDeleteClick="@OnDeleteClick"
+              OnFilterClick="@OnFilterClick" />
+
+@code {
+    private List<TableGroup<VacancyItem>> tableGroups = new();
+    private List<TableColumn<VacancyItem>> tableColumns = new();
+
+    protected override void OnInitialized()
+    {
+        InitializeData();
+        SetupColumns();
+    }
+
+    private void InitializeData()
+    {
+        // Development Group Data
+        var developmentVacancies = new List<VacancyItem>
+        {
+            new VacancyItem { No = 1, Role = "UI Designer", Location = "WFO", EmploymentType = "Full-time", JobCategory = "Development", SalaryRange = "5-7M IDR", PostedDate = "01/05/2025", ClosingDate = "15/06/2025", Status = "Open" },
+            new VacancyItem { No = 2, Role = "Frontend Engineer", Location = "WFO", EmploymentType = "Full-time", JobCategory = "Development", SalaryRange = "5-7M IDR", PostedDate = "01/05/2025", ClosingDate = "15/06/2025", Status = "Open" },
+            new VacancyItem { No = 3, Role = "Backend Engineer", Location = "WFO", EmploymentType = "Full-time", JobCategory = "Development", SalaryRange = "5-7M IDR", PostedDate = "01/05/2025", ClosingDate = "15/06/2025", Status = "Open" }
+        };
+
+        // Marketing Group Data
+        var marketingVacancies = new List<VacancyItem>
+        {
+            new VacancyItem { No = 1, Role = "Graphic Designer", Location = "WFO", EmploymentType = "Full-time", JobCategory = "Marketing", SalaryRange = "4-6M IDR", PostedDate = "01/05/2025", ClosingDate = "15/06/2025", Status = "Open" },
+            new VacancyItem { No = 2, Role = "Illustrator", Location = "WFO", EmploymentType = "Full-time", JobCategory = "Marketing", SalaryRange = "4-6M IDR", PostedDate = "01/05/2025", ClosingDate = "15/06/2025", Status = "Open" }
+        };
+
+        // Human Resources Group Data
+        var hrVacancies = new List<VacancyItem>
+        {
+            new VacancyItem { No = 1, Role = "HR Coordinator", Location = "WFO", EmploymentType = "Full-time", JobCategory = "Human Resources", SalaryRange = "4-6M IDR", PostedDate = "01/05/2025", ClosingDate = "15/06/2025", Status = "Open" }
+        };
+
+        // Create table groups
+        tableGroups = new List<TableGroup<VacancyItem>>
+        {
+            TableGroupBuilder<VacancyItem>.Create("Development Vacancies", developmentVacancies),
+            TableGroupBuilder<VacancyItem>.Create("Marketing Vacancies", marketingVacancies),
+            TableGroupBuilder<VacancyItem>.Create("Human Resources Vacancies", hrVacancies)
+        };
+    }
+
+    private void SetupColumns()
+    {
+        tableColumns = new List<TableColumn<VacancyItem>>
+        {
+            TableColumnBuilder<VacancyItem>.Create("No", nameof(VacancyItem.No)),
+            TableColumnBuilder<VacancyItem>.Create("Role", nameof(VacancyItem.Role)),
+            TableColumnBuilder<VacancyItem>.Create("Location", nameof(VacancyItem.Location)),
+            TableColumnBuilder<VacancyItem>.Create("Employment Type", nameof(VacancyItem.EmploymentType)),
+            TableColumnBuilder<VacancyItem>.Create("Job Category", nameof(VacancyItem.JobCategory)),
+            TableColumnBuilder<VacancyItem>.Create("Salary Range", nameof(VacancyItem.SalaryRange)),
+            TableColumnBuilder<VacancyItem>.Create("Posted Date", nameof(VacancyItem.PostedDate)),
+            TableColumnBuilder<VacancyItem>.Create("Closing Date", nameof(VacancyItem.ClosingDate)),
+
+            // Custom template for Status column with styling
+            TableColumnBuilder<VacancyItem>.CreateWithTemplate("Status", context =>
+    @<span class="@(context.Status == "Open" ? "status-open" : "status-closed")">
+        @context.Status
+    </span>
+            )
+        };
+    }
+
+    // Event handlers
+    private async Task OnAddClick()
+    {
+        Console.WriteLine("Add new vacancy clicked");
+        Navigation.NavigateTo("/form");
+    }
+
+    private async Task OnEditClick()
+    {
+        Console.WriteLine("Edit vacancy clicked");
+        // Add your edit logic here
+    }
+
+    private async Task OnDeleteClick()
+    {
+        Console.WriteLine("Delete vacancy clicked");
+        // Add your delete logic here
+    }
+
+    private async Task OnFilterClick()
+    {
+        Console.WriteLine("Filter vacancies clicked");
+        // Add your filter logic here
+    }
+}
