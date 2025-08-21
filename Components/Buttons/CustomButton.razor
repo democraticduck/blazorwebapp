@@ -1,0 +1,110 @@
+﻿@using MudBlazor
+
+<MudButton Variant="Variant.Filled"
+           StartIcon="@StartIcon"
+           EndIcon="@EndIcon"
+           Color="@Color"
+           IconColor="@IconColor"
+           Size="@Size"
+           Disabled="@Disabled"
+           Class="@($"my-custom-btn {Class}")"
+           Style="@Style"
+           @onclick="HandleClick">
+    <!-- Bind @onclick to HandleClick -->
+    @Label
+</MudButton>
+
+<style>
+    .my-custom-btn {
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: 600;
+    }
+</style>
+
+@code {
+    [Parameter] public ButtonType Type { get; set; }
+    [Parameter] public string? Label { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public string Class { get; set; } = string.Empty;
+
+    [Parameter] public string? StartIcon { get; set; }
+    [Parameter] public string? EndIcon { get; set; }
+    [Parameter] public Color Color { get; set; } = MudBlazor.Color.Default;
+    [Parameter] public Color IconColor { get; set; } = MudBlazor.Color.Default;
+    [Parameter] public Size Size { get; set; } = Size.Medium;
+    [Parameter] public string Style { get; set; } = string.Empty;
+
+    [Inject] public NavigationManager Navigation { get; set; } = default!;
+
+    // OnParametersSet ensures the button gets styled dynamically based on the Type
+    protected override void OnParametersSet()
+    {
+        switch (Type)
+        {
+            case ButtonType.Add:
+                Label = "Add";
+                StartIcon ??= Icons.Material.Filled.Add;
+                Style = "background-color: #0884e8ff; color: white;";
+                break;
+
+            case ButtonType.Edit:
+                Label ??= "Edit";
+                StartIcon ??= Icons.Material.Filled.Edit;
+                Style = "background-color: #4CAF50; color: white;";
+                break;
+
+            case ButtonType.Delete:
+                Label ??= "Delete";
+                StartIcon ??= Icons.Material.Filled.Delete;
+                Style = "background-color: #E53935; color: white;";
+                break;
+
+            case ButtonType.Save:
+                Label ??= "Save";
+                StartIcon ??= Icons.Material.Filled.Save;
+                Style = "background-color: #00ACC1; color: white;";
+                break;
+
+            case ButtonType.Clear:
+                Label ??= "Clear";
+                StartIcon ??= Icons.Material.Filled.Clear;
+                Style = "background-color: #FB8C00; color: white;";
+                break;
+
+            case ButtonType.Submit:
+                Label ??= "Submit";
+                EndIcon ??= Icons.Material.Filled.Send;
+                Style = "background-color: #43A047; color: white;";
+                break;
+
+            case ButtonType.Filter:
+                Label ??= "Filter";
+                EndIcon ??= Icons.Material.Filled.FilterList;
+                Style = "background-color: #00BCD4; color: white;";
+                break;
+        }
+    }
+
+    // Handle the click event and invoke the parent's OnClick
+    private async Task HandleClick(MouseEventArgs e)
+    {
+        if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync(e);
+        }
+    }
+
+    // Enum for button types
+    public enum ButtonType
+    {
+        Add,
+        Edit,
+        Delete,
+        Save,
+        Clear,
+        Submit,
+        Filter
+    }
+}

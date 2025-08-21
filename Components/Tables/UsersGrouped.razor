@@ -1,0 +1,118 @@
+﻿@page "/user-grouped"
+@using MudBlazor
+@using blazorwebapp.Components.Tables
+@using blazorwebapp.Models
+@inject NavigationManager Navigation
+
+<SectionContent SectionName="title">
+	User Data Groups
+</SectionContent>
+
+<GroupedTable TItem="User"
+			  Title="User Data"
+			  TableGroups="@tableGroups"
+			  TableColumns="@tableColumns"
+			  ShowSearch="true"
+			  ShowFilter="true"
+			  ShowAdd="true"
+			  ShowEdit="true"
+			  ShowDelete="true"
+			  ShowPagination="true"
+			  OnAddClick="@OnAddClick"
+			  OnEditClick="@OnEditClick"
+			  OnDeleteClick="@OnDeleteClick"
+			  OnFilterClick="@OnFilterClick" />
+
+@code {
+	private List<TableGroup<User>> tableGroups = new();
+	private List<TableColumn<User>> tableColumns = new();
+
+	protected override void OnInitialized()
+	{
+		InitializeData();
+		SetupColumns();
+	}
+
+	private void InitializeData()
+	{
+		// Development Group Data
+		var developmentVacancies = new List<User>
+		{
+			new User { Id = 1, Name = "John Doe", Email = "john.doe@company.com" },
+			new User { Id = 2, Name = "Jane Smith", Email = "jane.smith@company.com" },
+			new User { Id = 3, Name = "Mike Johnson", Email = "mike.johnson@company.com" }
+		};
+
+		// Marketing Group Data
+		var marketingVacancies = new List<User>
+		{
+			new User { Id = 4, Name = "Sarah Wilson", Email = "sarah.wilson@company.com" },
+			new User { Id = 5, Name = "David Brown", Email = "david.brown@company.com" },
+			new User { Id = 6, Name = "Lisa Garcia", Email = "lisa.garcia@company.com" },
+			new User { Id = 7, Name = "Robert Miller", Email = "robert.miller@company.com" },
+			new User { Id = 8, Name = "Emily Davis", Email = "emily.davis@company.com" }
+		};
+
+		// Human Resources Group Data
+		var hrVacancies = new List<User>
+		{
+			new User { Id = 9, Name = "James Rodriguez", Email = "james.rodriguez@company.com" },
+			new User { Id = 10, Name = "Ashley Martinez", Email = "ashley.martinez@company.com" },
+			new User { Id = 11, Name = "Christopher Lee", Email = "christopher.lee@company.com" }
+		};
+
+		var hpVacancies = new List<User>
+		{
+			new User { Id = 12, Name = "Amanda Taylor", Email = "amanda.taylor@company.com" },
+			new User { Id = 13, Name = "Daniel Anderson", Email = "daniel.anderson@company.com" },
+			new User { Id = 14, Name = "Jessica Thomas", Email = "jessica.thomas@company.com" },
+			new User { Id = 15, Name = "Matthew Jackson", Email = "matthew.jackson@company.com" }       
+		};
+
+		// Create table groups
+		tableGroups = new List<TableGroup<User>>
+		{
+			TableGroupBuilder<User>.Create("User Test", developmentVacancies),
+			TableGroupBuilder<User>.Create("User Test", marketingVacancies),
+			TableGroupBuilder<User>.Create("User Test", hrVacancies),
+
+			TableGroupBuilder<User>.Create("User Test", hpVacancies)
+		};
+	}
+
+	private void SetupColumns()
+	{
+		tableColumns = new List<TableColumn<User>>
+		{
+			TableColumnBuilder<User>.Create("No", nameof(User.Id)),
+			TableColumnBuilder<User>.Create("Role", nameof(User.Name)),
+			TableColumnBuilder<User>.Create("Location", nameof(User.Email))
+            // Custom template for Status column with styling
+		};
+	}
+
+	// Event handlers
+	private async Task OnAddClick()
+	{
+		Console.WriteLine("Add new vacancy clicked");
+		Navigation.NavigateTo("/form");
+	}
+
+	private async Task OnEditClick()
+	{
+		Console.WriteLine("Edit vacancy clicked");
+		// Add your edit logic here
+	}
+
+	private async Task OnDeleteClick()
+	{
+		Console.WriteLine("Delete vacancy clicked");
+		// Add your delete logic here
+	}
+
+	private async Task OnFilterClick()
+	{
+		Console.WriteLine("Filter vacancies clicked");
+		// Add your filter logic here
+	}
+}

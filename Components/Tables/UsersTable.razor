@@ -1,0 +1,92 @@
+﻿@page "/users"
+@using MudBlazor
+@using blazorwebapp.Components.Tables
+@using blazorwebapp.Models
+@inject NavigationManager Navigation
+
+<SectionContent SectionName="title">
+    Users
+</SectionContent>
+
+<ReusableTable TItem="User"
+               Title="Users Management"
+               Data="@usersData"
+               TableColumns="@tableColumns"
+               ShowSearch="true"
+               ShowFilter="true"
+               ShowAdd="true"
+               ShowEdit="true"
+               ShowDelete="true"
+               ShowPagination="true"
+               OnAddClick="@OnAddClick"
+               OnEditClick="@OnEditClick"
+               OnDeleteClick="@OnDeleteClick"
+               OnFilterClick="@OnFilterClick" />
+
+@code {
+    private List<User> usersData = new();
+    private List<TableColumn<User>> tableColumns = new();
+
+    protected override void OnInitialized()
+    {
+        InitializeData();
+        SetupColumns();
+    }
+
+    private void InitializeData()
+    {
+        usersData = new List<User>
+        {
+            new User { Id = 1, Name = "John Doe", Email = "john.doe@company.com" },
+            new User { Id = 2, Name = "Jane Smith", Email = "jane.smith@company.com" },
+            new User { Id = 3, Name = "Mike Johnson", Email = "mike.johnson@company.com" },
+            new User { Id = 4, Name = "Sarah Wilson", Email = "sarah.wilson@company.com" },
+            new User { Id = 5, Name = "David Brown", Email = "david.brown@company.com" },
+            new User { Id = 6, Name = "Lisa Garcia", Email = "lisa.garcia@company.com" },
+            new User { Id = 7, Name = "Robert Miller", Email = "robert.miller@company.com" },
+            new User { Id = 8, Name = "Emily Davis", Email = "emily.davis@company.com" },
+            new User { Id = 9, Name = "James Rodriguez", Email = "james.rodriguez@company.com" },
+            new User { Id = 10, Name = "Ashley Martinez", Email = "ashley.martinez@company.com" },
+            new User { Id = 11, Name = "Christopher Lee", Email = "christopher.lee@company.com" },
+            new User { Id = 12, Name = "Amanda Taylor", Email = "amanda.taylor@company.com" },
+            new User { Id = 13, Name = "Daniel Anderson", Email = "daniel.anderson@company.com" },
+            new User { Id = 14, Name = "Jessica Thomas", Email = "jessica.thomas@company.com" },
+            new User { Id = 15, Name = "Matthew Jackson", Email = "matthew.jackson@company.com" }
+        };
+    }
+
+    private void SetupColumns()
+    {
+        tableColumns = new List<TableColumn<User>>
+        {
+            TableColumnBuilder<User>.Create("ID", nameof(User.Id)),
+            TableColumnBuilder<User>.Create("Name", nameof(User.Name)),
+            TableColumnBuilder<User>.Create("Email", nameof(User.Email))
+        };
+    }
+
+    // Event handlers
+    private async Task OnAddClick()
+    {
+        Console.WriteLine("Add new user clicked");
+        // Navigation.NavigateTo("/users/add");
+    }
+
+    private async Task OnEditClick()
+    {
+        Console.WriteLine("Edit user clicked");
+        // Add your edit logic here
+    }
+
+    private async Task OnDeleteClick()
+    {
+        Console.WriteLine("Delete user clicked");
+        // Add your delete logic here
+    }
+
+    private async Task OnFilterClick()
+    {
+        Console.WriteLine("Filter users clicked");
+        // Add your filter logic here
+    }
+}
