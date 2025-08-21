@@ -12,8 +12,8 @@ namespace blazorwebapp.Components.Layout
                 Secondary = Colors.Red.Lighten1,
                 AppbarBackground = Colors.Shades.White,
                 Background = Colors.Gray.Lighten4,
-                
-                
+               
+
             }
         };
         void DrawerToggle()

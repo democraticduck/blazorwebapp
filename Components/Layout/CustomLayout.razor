@@ -8,17 +8,16 @@
 
 
 <MudSnackbarProvider />
-
+@*Bcuz one section outlet gets removed and another gets put, and child calls it, so null reference*@
 <MudLayout >
     <MudAppBar Elevation="1">
-        <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+        
             <MudIconButton Icon="@Icons.Material.Filled.Menu" Edge="Edge.Start" OnClick="DrawerToggle" />
             <MudSpacer />
-            <MudText Color="Color.Dark"><SectionOutlet SectionName="title" /></MudText>
-        </MudHidden>
-        <MudHidden Breakpoint="Breakpoint.SmAndDown">
-            <MudText Color="Color.Dark"><SectionOutlet SectionName="title" /></MudText>
-        </MudHidden>
+            
+        
+            <MudText Color="Color.Dark"><SectionOutlet SectionName="Title" /></MudText>
+        
         <MudSpacer />
         <MudStack Row="true">
             <MudIconButton Icon="@Icons.Material.Filled.Notifications" Title="Favorite" />
@@ -43,8 +42,7 @@
         <MudStack> @*Add Match to each navlink*@
             <MudNavMenu Rounded="true" Margin="Margin.Dense" Color="Color.Secondary" Class="pa-2">
                 <MudNavLink Match="NavLinkMatch.All" Href="/" Class="sidebar-nav-item" Icon="@Icons.Material.Filled.Dashboard">Home</MudNavLink>
-                <MudNavLink Match="NavLinkMatch.Prefix" Class="sidebar-nav-item" Href="/vacancy-data" Icon="@Icons.Material.Filled.Storage">Table 1</MudNavLink>
-                <MudNavLink Match="NavLinkMatch.Prefix" Class="sidebar-nav-item" Href="/vacancy-data2" Icon="@Icons.Material.Filled.Storage">Table 2</MudNavLink>
+                <MudNavLink Match="NavLinkMatch.Prefix" Class="sidebar-nav-item" Href="/tables" Icon="@Icons.Material.Filled.Storage">Tables</MudNavLink>
                 <MudNavLink Match="NavLinkMatch.Prefix" Class="sidebar-nav-item" Href="/form" Icon="@Icons.Material.Filled.Storage">Form</MudNavLink>
                 <MudNavLink Match="NavLinkMatch.Prefix" Class="sidebar-nav-item" Href="/auth/logout.html" Icon="@Icons.Material.Filled.Storage">Logout</MudNavLink>
             </MudNavMenu>

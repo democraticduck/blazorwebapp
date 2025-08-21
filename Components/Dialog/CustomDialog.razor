@@ -1,0 +1,36 @@
+﻿@using MudBlazor
+@using blazorwebapp.Components.Shared.Navigation
+
+<MudDialog
+           Class="enhanced-dialog"
+           Style="border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 8px 32px rgba(0,0,0,0.08); border: 1px solid var(--mud-palette-divider-light); backdrop-filter: blur(10px);"
+           @ref="_dialog">
+           
+    <TitleContent>
+        <div class="d-flex align-center gap-3 pa-4 dialog-header">
+            <div class="title-icon-wrapper">
+                <MudIcon Icon="@Icons.Material.Filled.Widgets"
+                         Color="Color.Secondary"
+                         Size="Size.Medium"
+                         Class="title-icon" />
+            </div>
+            <MudText Typo="Typo.h5"
+                     Color="Color.Primary"
+                     Class="font-weight-bold dialog-title">
+                @Title
+            </MudText>
+            
+            
+        </div>
+    </TitleContent>
+
+    <DialogContent>
+        <div class="dialog-content-wrapper">
+            @Body
+        </div>
+    </DialogContent>
+</MudDialog>
+
+<style>
+    
+</style>

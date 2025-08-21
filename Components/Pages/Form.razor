@@ -1,9 +1,22 @@
 ﻿@page "/form"
 @using MudBlazor
 
-<SectionContent SectionName="title">
+<SectionContent SectionName="Title">
     Form
 </SectionContent>
+
+<CustomNavTabs>
+    <MudTabPanels>
+    <MudTabPanel Text="Table 1">
+        <Table />
+    </MudTabPanel>
+        <MudTabPanel Text="Table 2">
+            <Table2 />
+        </MudTabPanel>
+        <MudTabPanel Text="Bug Report" />
+    </MudTabPanels>
+</CustomNavTabs>
+    
 
 <MudContainer Class="py-4 px-2">
     <MudPaper Elevation="8" Class="pa-4 mb-4" Style="background: linear-gradient(135deg, #fc4e03 0%, #FF7575 100%); border-radius: 12px;">

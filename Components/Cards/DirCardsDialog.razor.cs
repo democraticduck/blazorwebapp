@@ -8,18 +8,14 @@ namespace blazorwebapp.Components.Cards
 public partial class DirCardsDialog
 {
         
+        
         private int selectedRowNumber = -1;
         private MudTable<NavListItem> mudTable;
 
         [Inject]
         private NavigationManager navMan { get; set; }
         [Parameter]
-        public List<NavListItem> Elements { get; set; } = new List<NavListItem>()
-        {
-            new NavListItem() { Name="UserBranchMaintenance", Path="/" },
-            new NavListItem() { Name="FinanceBranchMaintenance", Path="/" },
-            new NavListItem() { Name="SomethingElseMaintenance", Path="/" },
-        };
+        public List<NavListItem> Elements { get; set; } 
         
         private void RowClickEvent(TableRowClickEventArgs<NavListItem> tableRowClickEventArgs)
         {

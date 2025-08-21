@@ -1,13 +1,7 @@
-﻿.selected {
-    color: var(--mud-palette-secondary);
-    background-color: var(--mud-palette-table-hover);
+﻿.transition-all {
+    transition: all 0.2s ease-in-out;
 }
 
-.mud-table-toolbar {
-    padding: 10px;
-    padding-inline: 16px;
-}
-
-.mud-dialog-title {
-    padding: 20px !important
+.duration-200 {
+    transition-duration: 200ms;
 }

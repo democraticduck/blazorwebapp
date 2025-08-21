@@ -13,10 +13,10 @@ namespace blazorwebapp.Components.Cards
         public List<TableCategoryElement> Elements { get; set; }
         private Task OpenDialogAsync(TableCategoryElement e)
         {
-            var options = new DialogOptions { CloseOnEscapeKey = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, CloseButton = true };
             var dialogParameters = new DialogParameters<DirCardsDialog>();
             dialogParameters.Add(x => x.Elements, e.navListItems);
-
+            
             return DialogService.ShowAsync<DirCardsDialog>(e.Category, dialogParameters, options);
         }
     }

@@ -1,0 +1,77 @@
+﻿.nav-tabs-container {
+    border-radius: 24px;
+    overflow: hidden;
+    margin: 8px;
+    padding: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .nav-tabs-container {
+        width: 95%;
+        margin: 4px;
+        padding: 6px;
+        border-radius: 20px;
+    }
+
+    .enhanced-tabs .mud-tab {
+        padding: 10px 16px;
+        min-height: 44px;
+        font-size: 0.875rem;
+    }
+
+    .enhanced-tabs .mud-tab-icon {
+        font-size: 1rem;
+    }
+}
+
+/* Dark theme optimizations */
+@media (prefers-color-scheme: dark) {
+    .nav-tabs-container {
+        border-color: var(--mud-palette-divider);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 4px 10px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .enhanced-tabs .mud-tabs-toolbar {
+        background: rgba(255, 255, 255, 0.02);
+        border-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .enhanced-tabs .mud-tab:hover {
+        background: rgba(var(--mud-palette-primary-rgb), 0.1);
+    }
+}
+
+
+.enhanced-tabs .mud-tab {
+    animation: fadeInTab 0.4s ease-out both;
+}
+
+    .enhanced-tabs .mud-tab:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+
+    .enhanced-tabs .mud-tab:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .enhanced-tabs .mud-tab:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+
+@keyframes fadeInTab {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+

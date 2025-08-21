@@ -1,0 +1,147 @@
+﻿@using MudBlazor
+
+<div class="nav-tabs-container">
+    <MudTabs 
+             Rounded="true"
+             PanelClass="tab-panel"
+             Class="enhanced-tabs"
+             SliderColor="Color.Secondary"
+             >
+        @MudTabPanels
+    </MudTabs>
+</div>
+
+<style>
+    
+    .outer-div {
+        border-radius: 9999px;
+        width: 90%;
+        
+        
+        overflow: hidden;
+        margin: 5px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 
+        0px 1px 3px rgba(0, 0, 0, 0.06); 
+    }
+    .mud-tabs {
+        overflow: hidden;
+        width: 80%;
+    }
+
+    .mud-tabs-tabbar {
+        border-radius: 9999px !important;
+        margin: 5px;
+        overflow: hidden;
+    }
+
+    .enhanced-tabs {
+        background: transparent;
+        width: 100%;
+    }
+
+        .enhanced-tabs .mud-tabs-toolbar {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 4px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .enhanced-tabs .mud-tab {
+            border-radius: 9999px;
+            margin: 2px;
+            padding: 12px 20px;
+            font-weight: 500;
+            letter-spacing: 0.025em;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            background: transparent;
+            color: var(--mud-palette-text-secondary);
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+            .enhanced-tabs .mud-tab::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(135deg, var(--mud-palette-primary-lighten) 0%, var(--mud-palette-primary) 100%);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                border-radius: 12px;
+            }
+
+            .enhanced-tabs .mud-tab:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(var(--mud-palette-primary-rgb), 0.15);
+                color: var(--mud-palette-primary);
+                background: rgba(var(--mud-palette-primary-rgb), 0.05);
+            }
+
+                .enhanced-tabs .mud-tab:hover::before {
+                    opacity: 0.1;
+                }
+
+            .enhanced-tabs .mud-tab.mud-tab-active {
+                
+                color: var(--mud-palette-secondary);
+                box-shadow: 0 8px 25px rgba(var(--mud-palette-primary-rgb), 0.3), 0 3px 10px rgba(var(--mud-palette-primary-rgb), 0.2);
+                font-weight: 600;
+            }
+
+                .enhanced-tabs .mud-tab.mud-tab-active::before {
+                    opacity: 0;
+                }
+
+        .enhanced-tabs .mud-tab-icon {
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .enhanced-tabs .mud-tab:hover .mud-tab-icon {
+            transform: scale(1.1);
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .enhanced-tabs .mud-tab.mud-tab-active .mud-tab-icon {
+            transform: scale(1.05);
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .enhanced-tabs .mud-tab-text {
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        /* Hide the default slider */
+        .enhanced-tabs .mud-tabs-slider {
+            display: none;
+        }
+
+    /* Tab panel styling */
+    .tab-panel {
+        padding: 24px 16px;
+        background: var(--mud-palette-surface);
+        border-radius: 0 0 16px 16px;
+        
+    }
+
+    /* Ripple effect on click */
+    .enhanced-tabs .mud-tab:active {
+        transform: translateY(0);
+    }
+
+    /* Focus states for accessibility */
+    .enhanced-tabs .mud-tab:focus-visible {
+        outline: 2px solid var(--mud-palette-primary);
+        outline-offset: 2px;
+    }
+    
+</style>

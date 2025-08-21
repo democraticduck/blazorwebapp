@@ -1,38 +1,83 @@
-﻿    <MudStack Class="w-full m-0 shadow-none" Style="@Style">
-        <MudTextField @bind-Value="_currentString"
-                        Label="Search"
-                        Immediate="true"
-                        Variant="@Variant"
-                        Margin="Margin.Dense"
-                        OnBlur="() => setOpen(false)"
-                      
-                        @onfocus="() => setOpen(true)" Class="m-0"  />
-        <MudPopover Open="@_open" RelativeWidth="DropdownWidth.Relative" Fixed="true" Class="px-4 m-0 shadow-none" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopLeft">
-            <div class="overflow-auto" style="max-height:300px; width:100%;">
+﻿<MudStack Class="w-full m-0 shadow-none search-container" Style="@Style">
+    <MudTextField @bind-Value="_currentString"
+                  Label="Search"
+                  Placeholder="Type to search..."
+                  Immediate="true"
+                  Variant="@Variant"
+                  Margin="Margin.Dense"
+                  OnBlur="() => setOpen(false)"
+                  @onfocus="() => setOpen(true)"
+                  Class="m-0 search-input"
+                  Adornment="Adornment.Start"
+                  AdornmentIcon="@Icons.Material.Filled.Search"
+                  Clearable="true" />
 
+    <MudPopover Open="@_open"
+                RelativeWidth="DropdownWidth.Relative"
+                Fixed="true"
+                Class="search-popover elevation-4"
+                AnchorOrigin="Origin.BottomLeft"
+                TransformOrigin="Origin.TopLeft">
+
+        <div class="search-results-container">
             @if (!string.IsNullOrWhiteSpace(_currentString))
             {
                 var filtered = Elements
                 .Where(s => s.Name.Contains(_currentString, StringComparison.OrdinalIgnoreCase))
                 .ToList();
+
                 @if (filtered.Any())
                 {
+                    <div class="search-results-header">
+                        <MudText Typo="Typo.caption" Class="results-count">
+                            @filtered.Count result@(filtered.Count != 1 ? "s" : "")
+                        </MudText>
+                    </div>
+
+                    <MudList T="string" Class="m-0">
                     @foreach (var item in filtered)
                     {
-                        Console.WriteLine(@item);
-                        <MudNavLink Href="@item.Path">
-                            @item
-                        </MudNavLink>
+                        <MudListItem Class="p-0 m-0">
+                            <MudNavLink Href="@item.Path" Class="search-nav-link p-0">
+                                    <div class="d-flex justify-between gap-3">
+                                    
+                                    <MudText Typo="Typo.body1" Class="result-text">
+                                        @item.Name
+                                    </MudText>
+                                    <MudIcon Icon="@Icons.Material.Filled.ChevronRight"
+                                             Size="Size.Small"
+                                             Class="result-arrow" />
+                                </div>
+                            </MudNavLink>
+                         </MudListItem>
+                         <MudDivider size="1"/>
                     }
+                    </MudList>
                 }
                 else
                 {
-                    <MudText Typo="Typo.caption" Class="text-gray-500">No matches</MudText>
+                    <div class="no-results">
+                        <MudIcon Icon="@Icons.Material.Filled.SearchOff"
+                                 Size="Size.Medium"
+                                 Class="no-results-icon" />
+                        <MudText Typo="Typo.body2" Class="no-results-text">
+                            No matches found
+                        </MudText>
+                    </div>
                 }
             }
-              
-            </div>
-            
-        </MudPopover>
-    </MudStack>
-    
+            else
+            {
+                <div class="search-placeholder">
+                    <MudIcon Icon="@Icons.Material.Filled.Search"
+                             Size="Size.Medium"
+                             Class="placeholder-icon" />
+                    <MudText Typo="Typo.body2" Class="placeholder-text">
+                        Start typing to search
+                    </MudText>
+                </div>
+            }
+        </div>
+    </MudPopover>
+</MudStack>
+
